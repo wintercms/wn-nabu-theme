@@ -17,17 +17,17 @@ is_hidden = 0
 
         {% for doc in docsList.docs %}
             <div class="p-2 flex flex-row gap-4 items-center">
-                <div class="heading-5 w-3/5">
+                <div class="heading-5 flex-grow">
                     {{ doc.name }}
                 </div>
-                <div class="w-1/5 text-right">
+                <div class="flex-shrink text-right">
                     <a href="{{ doc.pageUrl }}" class="button button-primary">
                         View docs
                     </a>
                 </div>
-                <div class="w-1/5 text-right">
+                <div class="flex-shrink text-right">
                     <a href="{{ doc.sourceUrl }}" class="button button-outlined">
-                        Edit source
+                        Source
                     </a>
                 </div>
             </div>
