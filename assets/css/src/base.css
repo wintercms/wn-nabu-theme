@@ -6,6 +6,7 @@
 /* Vendor files */
 @import 'choices.js/public/assets/styles/choices.css';
 
+@import './elements/buttons.css';
 @import './elements/navigation.css';
 @import './elements/typography.css';
 @import './elements/rich-content.css';

@@ -1,0 +1,36 @@
+title = "Winter CMS Documentation"
+url = "/"
+layout = "home"
+is_hidden = 0
+
+[docsList]
+==
+<div class="h-full w-full flex flex-col items-center justify-center">
+    <div class="w-10/12 lg:w-1/2 flex flex-col gap-6">
+        <div class="w-60 mx-auto">
+            {% partial 'site/logo' %}
+        </div>
+        <div class="heading-1 -mt-6 mx-auto">
+            Documentation
+        </div>
+        <div class="border-t border-grey-300 dark:border-navy-light"></div>
+
+        {% for doc in docsList.docs %}
+            <div class="p-2 flex flex-row gap-4 items-center">
+                <div class="heading-5 w-3/5">
+                    {{ doc.name }}
+                </div>
+                <div class="w-1/5 text-right">
+                    <a href="{{ doc.pageUrl }}" class="button button-primary">
+                        View docs
+                    </a>
+                </div>
+                <div class="w-1/5 text-right">
+                    <a href="{{ doc.sourceUrl }}" class="button button-outlined">
+                        Edit source
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

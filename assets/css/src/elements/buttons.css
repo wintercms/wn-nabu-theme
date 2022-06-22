@@ -1,0 +1,18 @@
+.button {
+    @apply relative py-3 px-6 no-underline inline-block transform transition-all cursor-pointer outline-none text-opacity-100 rounded-md;
+
+    /* Default colors */
+    @apply bg-blue-dark text-white dark:bg-blue;
+    @apply hover:bg-green-dark dark:hover:bg-green active:scale-90;
+
+    /* Font weight */
+    @apply font-bold;
+
+    &.button-outlined {
+        @apply border border-blue-dark dark:border-blue bg-transparent text-blue-dark dark:text-blue;;
+
+        &:hover {
+            @apply border-green-dark dark:border-green text-green-dark dark:text-green bg-transparent;
+        }
+    }
+}
