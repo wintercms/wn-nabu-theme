@@ -1,19 +1,11 @@
 description = 'GitHub Edit Button';
 ==
-{% if docId == 'winter.winterdocs.winterbranch12' %}
-    {% set github = 'https://github.com/wintercms/docs/edit/wip/1.2-new-format/' %}
-{% elseif docId == 'winter.winterdocs.winterbranch12markup' %}
-    {% set github = 'https://github.com/wintercms/docs/edit/wip/1.2-new-format/markup/' %}
-{% elseif docId == 'winter.winterdocs.winterbranch12ui' %}
-    {% set github = 'https://github.com/wintercms/docs/edit/wip/1.2-new-format/ui/' %}
-{% endif %}
-
-{% if github %}
+{% if editUrl %}
 <div class="my-8 border-t border-grey-100 dark:border-navy"></div>
 
 <div>
     <a
-        href="{{ github }}{{ pagePath }}.md"
+        href="{{ editUrl }}"
         target="github"
         class="
             github external-link bg-grey-100 hover:bg-grey-200 rounded-md px-4 py-2 text-disclaimer-mobile lg:text-disclaimer
