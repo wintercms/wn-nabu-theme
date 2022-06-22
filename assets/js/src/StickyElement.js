@@ -179,7 +179,7 @@ export default class StickyElement extends Snowboard.PluginBase {
      * of the sticky element.
      */
     onMutation() {
-        if (this.stickied && !this.config().get('noAutoHeight')) {
+        if (this.stickied && !this.config.get('noAutoHeight')) {
             // Re-calculate height of sticky element
             let height = 0;
 
