@@ -1,0 +1,77 @@
+.sidebar-menu > ul > li {
+    @apply mt-6;
+
+    &:first-child {
+        @apply mt-0;
+    }
+
+    & > span {
+        @apply text-navy dark:text-white font-semibold block;
+    }
+
+    ul {
+        @apply border-l border-grey-300 dark:border-navy-light my-3;
+
+        & > li {
+            @apply mt-1 -ml-px pl-4 border-l border-transparent;
+
+            &:hover {
+                @apply border-l border-green-dark dark:border-green;
+            }
+
+            &.active {
+                @apply text-blue border-l-4 border-blue pl-3;
+            }
+
+            a, span {
+                @apply block hover:text-green dark:hover:text-green-dark;
+            }
+
+            &[data-collapsible][data-collapsed="true"] {
+                & > ul {
+                    @apply hidden;
+                }
+            }
+
+            a.external-link {
+                @apply opacity-80;
+
+                &::after {
+                    content: '\f08e';
+                    font-family: 'Icon Font';
+                    @apply opacity-50 inline-block relative pl-[2px] -top-1 text-caption-mobile lg:text-caption;
+                }
+            }
+        }
+    }
+}
+
+.toc-menu ul {
+    li {
+        @apply mt-1;
+
+        &.active > a {
+            @apply text-blue;
+        }
+
+        a {
+            @apply hover:text-green dark:hover:text-green-dark;
+        }
+    }
+
+    & > li > ul {
+        @apply ml-8;
+
+        li {
+            @apply text-caption-mobile lg:text-caption;
+        }
+    }
+}
+
+.toc-menu > div > ul:first-child {
+    @apply mt-0;
+
+    & > li:first-child {
+        @apply mt-0;
+    }
+}

@@ -1,0 +1,525 @@
+/* PrismJS 1.28.0
+https://prismjs.com/download.html#themes=prism-solarizedlight&languages=markup+css+clike+javascript+apacheconf+bash+bnf+css-extras+editorconfig+git+graphql+http+ignore+ini+javadoclike+jsdoc+js-extras+json+json5+less+markdown+markup-templating+nginx+php+phpdoc+php-extras+sass+scss+sql+twig+typescript+yaml&plugins=line-highlight+line-numbers+autolinker+show-language+remove-initial-line-feed+inline-color+normalize-whitespace+toolbar+copy-to-clipboard+download-button+match-braces */
+/*
+ Solarized Color Schemes originally by Ethan Schoonover
+ http://ethanschoonover.com/solarized
+
+ Ported for PrismJS by Hector Matos
+ Website: https://krakendev.io
+ Twitter Handle: https://twitter.com/allonsykraken)
+*/
+
+/*
+SOLARIZED HEX
+--------- -------
+base03    #002b36
+base02    #073642
+base01    #586e75
+base00    #657b83
+base0     #839496
+base1     #93a1a1
+base2     #eee8d5
+base3     #fdf6e3
+yellow    #b58900
+orange    #cb4b16
+red       #dc322f
+magenta   #d33682
+violet    #6c71c4
+blue      #268bd2
+cyan      #2aa198
+green     #859900
+*/
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #93a1a1;
+    /* base1 */
+}
+
+.token.punctuation {
+    color: #586e75;
+    /* base01 */
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #268bd2;
+    /* blue */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.url,
+.token.inserted,
+.token.treeview-part .entry-dir {
+    color: #2aa198;
+    /* cyan */
+}
+
+.token.entity {
+    color: #657b83;
+    /* base00 */
+    background: #eee8d5;
+    /* base2 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #859900;
+    /* green */
+}
+
+.token.function,
+.token.class-name {
+    color: #b58900;
+    /* yellow */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #cb4b16;
+    /* orange */
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+pre[data-line] {
+    position: relative;
+    padding: 1em 0 1em 3em;
+}
+
+.line-highlight {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: inherit 0;
+    margin-top: 1em;
+    /* Same as .prism’s padding-top */
+
+    background: hsla(24, 20%, 50%, .08);
+    background: linear-gradient(to right, hsla(24, 20%, 50%, .1) 70%, hsla(24, 20%, 50%, 0));
+
+    pointer-events: none;
+
+    line-height: inherit;
+    white-space: pre;
+}
+
+@media print {
+    .line-highlight {
+        /*
+		 * This will prevent browsers from replacing the background color with white.
+		 * It's necessary because the element is layered on top of the displayed code.
+		 */
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+}
+
+.line-highlight:before,
+.line-highlight[data-end]:after {
+    content: attr(data-start);
+    position: absolute;
+    top: .4em;
+    left: .6em;
+    min-width: 1em;
+    padding: 0 .5em;
+    background-color: hsla(24, 20%, 50%, .4);
+    color: hsl(24, 20%, 95%);
+    font: bold 65%/1.5 sans-serif;
+    text-align: center;
+    vertical-align: .3em;
+    border-radius: 999px;
+    text-shadow: none;
+    box-shadow: 0 1px white;
+}
+
+.line-highlight[data-end]:after {
+    content: attr(data-end);
+    top: auto;
+    bottom: .4em;
+}
+
+.line-numbers .line-highlight:before,
+.line-numbers .line-highlight:after {
+    content: none;
+}
+
+pre[id].linkable-line-numbers span.line-numbers-rows {
+    pointer-events: all;
+}
+
+pre[id].linkable-line-numbers span.line-numbers-rows>span:before {
+    cursor: pointer;
+}
+
+pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
+    background-color: rgba(128, 128, 128, .2);
+}
+
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers>code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em;
+    /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+.line-numbers-rows>span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows>span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+.token a {
+    color: inherit;
+}
+
+div.code-toolbar {
+    position: relative;
+}
+
+div.code-toolbar>.toolbar {
+    position: absolute;
+    z-index: 10;
+    top: .3em;
+    right: .2em;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+div.code-toolbar:hover>.toolbar {
+    opacity: 1;
+}
+
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:focus-within>.toolbar {
+    opacity: 1;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item {
+    display: inline-block;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>a {
+    cursor: pointer;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>button {
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-user-select: none;
+    /* for button */
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>a,
+div.code-toolbar>.toolbar>.toolbar-item>button,
+div.code-toolbar>.toolbar>.toolbar-item>span {
+    color: #bbb;
+    font-size: .8em;
+    padding: 0 .5em;
+    background: #f5f2f0;
+    background: rgba(224, 224, 224, 0.2);
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+    border-radius: .5em;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>a:hover,
+div.code-toolbar>.toolbar>.toolbar-item>a:focus,
+div.code-toolbar>.toolbar>.toolbar-item>button:hover,
+div.code-toolbar>.toolbar>.toolbar-item>button:focus,
+div.code-toolbar>.toolbar>.toolbar-item>span:hover,
+div.code-toolbar>.toolbar>.toolbar-item>span:focus {
+    color: inherit;
+    text-decoration: none;
+}
+
+span.inline-color-wrapper {
+    /*
+	 * The background image is the following SVG inline in base 64:
+	 *
+	 * <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2">
+	 *     <path fill="gray" d="M0 0h2v2H0z"/>
+	 *     <path fill="white" d="M0 0h1v1H0zM1 1h1v1H1z"/>
+	 * </svg>
+	 *
+	 * SVG-inlining explained:
+	 * https://stackoverflow.com/a/21626701/7595472
+	 */
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0wIDBoMnYySDB6Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0wIDBoMXYxSDB6TTEgMWgxdjFIMXoiLz48L3N2Zz4=");
+    /* This is to prevent visual glitches where one pixel from the repeating pattern could be seen. */
+    background-position: center;
+    background-size: 110%;
+
+    display: inline-block;
+    height: 1.333ch;
+    width: 1.333ch;
+    margin: 0 .333ch;
+    box-sizing: border-box;
+    border: 1px solid white;
+    outline: 1px solid rgba(0, 0, 0, .5);
+    overflow: hidden;
+}
+
+span.inline-color {
+    display: block;
+    /* To prevent visual glitches again */
+    height: 120%;
+    width: 120%;
+}
+
+.token.treeview-part .entry-lines {
+    display: inline-block;
+}
+
+.token.treeview-part .entry-lines .line-h,
+.token.treeview-part .entry-lines .line-v,
+.token.treeview-part .entry-lines .line-v-last,
+.token.treeview-part .entry-lines .line-v-gap {
+    position: relative;
+    text-indent: -99em;
+    display: inline-block;
+    vertical-align: top;
+    width: 2.4rem;
+    overflow: visible;
+}
+
+.token.treeview-part .entry-lines .line-h:before,
+.token.treeview-part .entry-lines .line-v:before,
+.token.treeview-part .entry-lines .line-v-last:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 33%;
+    width: 50%;
+    height: 100%;
+}
+
+.token.treeview-part .entry-lines .line-h:after,
+.token.treeview-part .entry-lines .line-v:after,
+.token.treeview-part .entry-lines .line-v-last:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 33%;
+    width: 50%;
+    height: 50%;
+    border-left: 1px solid rgba(147, 161, 161, 0.8);
+}
+
+.token.treeview-part .entry-lines .line-v:before,
+.token.treeview-part .entry-lines .line-h:before {
+    border-left: 1px solid rgba(147, 161, 161, 0.8);
+}
+
+.token.treeview-part .entry-lines .line-h:after,
+.token.treeview-part .entry-lines .line-v-last:after {
+    border-bottom: 1px solid rgba(147, 161, 161, 0.8);
+}
+
+.token.treeview-part .entry-name,
+.token.treeview-part .entry-dir {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.token.treeview-part .entry-name.dotfile .token.treeview-part .entry-dir.dotfile {
+    opacity: 0.5;
+}
+
+/* @GENERATED-FONT */
+@font-face {
+    font-family: "File Font";
+    src: url('../../fonts/vendor/ffont.woff') format('woff'),
+        url('../../fonts/vendor/ffont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "Directory Font";
+    src: url('../../fonts/vendor/icomoon.woff') format('woff');
+}
+
+.token.treeview-part .entry-name:before,
+.token.treeview-part .entry-dir:before {
+    content: "\ea41";
+    font-family: "File Font";
+    font-size: inherit;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    display: inline-block;
+    margin-right: 4px;
+    vertical-align: middle;
+    color: #2aa198;
+}
+
+.token.treeview-part .entry-dir:before {
+    font-family: "Icon Font";
+    content: "\f07b";
+}
+
+.token.treeview-part .entry-name.ext-bmp:before,
+.token.treeview-part .entry-name.ext-eps:before,
+.token.treeview-part .entry-name.ext-gif:before,
+.token.treeview-part .entry-name.ext-jpe:before,
+.token.treeview-part .entry-name.ext-jpg:before,
+.token.treeview-part .entry-name.ext-jpeg:before,
+.token.treeview-part .entry-name.ext-png:before,
+.token.treeview-part .entry-name.ext-svg:before,
+.token.treeview-part .entry-name.ext-tiff:before {
+    content: "\ea62";
+}
+
+.token.treeview-part .entry-name.ext-csv:before,
+.token.treeview-part .entry-name.ext-ini:before,
+.token.treeview-part .entry-name.ext-log:before,
+.token.treeview-part .entry-name.ext-nfo:before,
+.token.treeview-part .entry-name.ext-txt:before {
+    content: "\ea34";
+}
+
+.token.treeview-part .entry-name.ext-css:before {
+    content: "\ea2a";
+}
+
+.token.treeview-part .entry-name.ext-htm:before,
+.token.treeview-part .entry-name.ext-html:before {
+    content: "\ea5f";
+}
+
+.token.treeview-part .entry-name.ext-js:before {
+    content: "\ea68";
+}
+
+.token.treeview-part .entry-name.ext-php:before {
+    content: "\ea9b";
+}
+
+.token.treeview-part .entry-name.ext-less:before {
+    content: "\ea74";
+}
+
+.token.treeview-part .entry-name.ext-scss:before,
+.token.treeview-part .entry-name.ext-sass:before {
+    content: "\eaba";
+}
+
+.token.treeview-part .entry-name.ext-md:before {
+    content: "\ea7b";
+}
+
+.token.treeview-part .entry-name.ext-json:before,
+.token.treeview-part .entry-name.ext-lock:before {
+    content: "\ea6b";
+}
+
+.token.treeview-part .entry-name.ext-yml:before,
+.token.treeview-part .entry-name.ext-yaml:before {
+    content: "\eaeb";
+}
+
+.token.treeview-part .entry-name.ext-xml:before {
+    content: "\eaea";
+}
+
+.token.treeview-part .entry-name.ext-artisan:before {
+    content: "\ea73";
+}
+
+.token.punctuation.brace-hover,
+.token.punctuation.brace-selected {
+    outline: solid 1px;
+}
+
+.rainbow-braces .token.punctuation.brace-level-1,
+.rainbow-braces .token.punctuation.brace-level-5,
+.rainbow-braces .token.punctuation.brace-level-9 {
+    color: #E50;
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-2,
+.rainbow-braces .token.punctuation.brace-level-6,
+.rainbow-braces .token.punctuation.brace-level-10 {
+    color: #0B3;
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-3,
+.rainbow-braces .token.punctuation.brace-level-7,
+.rainbow-braces .token.punctuation.brace-level-11 {
+    color: #26F;
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-4,
+.rainbow-braces .token.punctuation.brace-level-8,
+.rainbow-braces .token.punctuation.brace-level-12 {
+    color: #E0E;
+    opacity: 1;
+}

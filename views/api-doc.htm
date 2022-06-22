@@ -1,0 +1,504 @@
+<ul class="table-of-contents">
+    {% if class.traits %}
+        <li>
+            <a href="#traits">
+                Traits
+            </a>
+        </li>
+    {% endif %}
+    {% if class.constants %}
+        <li>
+            <a href="#constants">
+                Constants
+            </a>
+        </li>
+    {% endif %}
+    {% if class.properties %}
+        <li>
+            <a href="#properties">
+                Properties
+            </a>
+            <ul>
+                {% for property in class.properties %}
+                    <li>
+                        <a href="#prop-{{ property.name | slug }}">
+                            <span class="type">
+                                {% if property.type.definition == 'union' %}
+                                    {% for type in property.type.types %}
+                                        {% if not loop.first %}
+                                            |
+                                        {% endif %}
+                                        {% if type.definition == 'reference' %}
+                                            {{ type.type.name }}
+                                        {% else %}
+                                            {{ type.type }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% if property.type.definition == 'reference' %}
+                                        {{ property.type.type.name }}
+                                    {% else %}
+                                        {{ property.type.type }}
+                                    {% endif %}
+                                {% endif %}
+                            </span>
+                            <span class="name">
+                                ${{ property.name }}
+                            </span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+    {% if class.methods %}
+        <li>
+            <a href="#methods">
+                Methods
+            </a>
+            <ul>
+                {% for method in class.methods %}
+                    <li>
+                        <a href="#method-{{ method.name | slug }}">
+                            {% if method.visibility == 'public' %}
+                                <span class="public">
+                                    public
+                                </span>
+                            {% elseif method.visibility == 'protected' %}
+                                <span class="protected">
+                                    protected
+                                </span>
+                            {% else %}
+                                <span class="private">
+                                    private
+                                </span>
+                            {% endif %}
+
+                            <span class="name">
+                                {{ method.name }}()
+                            </span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+</ul>
+
+<h1 class="main-title">
+    {{ class.name }}
+
+    {% if class.docs.summary %}
+    <span class="block heading-5 text-blue">
+        {{ class.docs.summary | raw }}
+    </span>
+    {% endif %}
+</h1>
+
+<pre class="!-mt-4 !py-2"><code class="language-php">
+    {%- if class.final -%}
+        final
+    {%- elseif class.abstract -%}
+        abstract
+    {%- endif %} {{ class.type }} {{ class.namespace }}\{{ class.name -}}
+
+    {%- if class.extends %}{{ "\n" }}extends {{class.extends }}{% endif -%}
+
+    {%- if class.implements %}{{ "\n" }}implements {% endif -%}
+    {%- for interface in class.implements %}{{ "\n" }}    {{ interface }}{% if not loop.last %},{% endif%}{% endfor -%}
+</code></pre>
+
+{% if class.docs.body %}
+<div class="description">
+    {{ class.docs.body | raw }}
+</div>
+{% endif %}
+
+{% if class.traits %}
+    <h2>
+        <a id="content-traits" href="#traits" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Traits
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Trait</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trait in class.traits %}
+                <tr>
+                    <td>
+                        <a href="path:{{ trait.class|replace({'\\': '/'}) }}" title="{{ trait.class}}" class="code-link">
+                            <code>{{ trait.name }}</code>
+                        </a>
+                    </td>
+                    <td>{{ trait.summary | raw }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if class.constants %}
+    <h2>
+        <a id="content-constants" href="#constants" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Constants
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Constant</th>
+                    <th class="hidden md:table-cell">Type</th>
+                    <th class="hidden md:table-cell">Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for constant in class.constants %}
+                <tr>
+                    <td>
+                        <code>{{ constant.name }}</code>
+                    </td>
+                    <td class="hidden md:table-cell">
+                        {% if constant.type.definition == 'reference' and constant.type.type.linked %}
+                            <a href="path:{{ constant.type.type.class|replace({'\\': '/'}) }}" title="{{ constant.type.type.class }}" class="code-link">
+                                {{ constant.type.type.name }}
+                            </a>
+                        {% elseif constant.type.definition == 'reference' %}
+                            <span class="text-blue-dark dark:text-blue">{{ constant.type.type.name }}</span>
+                        {% else %}
+                            <span class="text-blue-dark dark:text-blue">{{ constant.type.type }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="hidden md:table-cell">
+                        <code class="language-php">{{ constant.value }}</code>
+                    </td>
+                    <td>
+                        <div class="block md:hidden">
+                            {% if constant.type.definition == 'reference' and constant.type.type.linked %}
+                                <a href="path:{{ constant.type.type.class|replace({'\\': '/'}) }}" title="{{ constant.type.type.class }}" class="code-link">
+                                    {{ constant.type.type.name }}
+                                </a>
+                            {% elseif constant.type.definition == 'reference' %}
+                                <span class="text-blue-dark dark:text-blue">{{ constant.type.type.name }}</span>
+                            {% else %}
+                                <span class="text-blue-dark dark:text-blue">{{ constant.type.type }}</span>
+                            {% endif %}
+                            <code class="language-php">{{ constant.value }}</code>
+                        </div>
+
+                        {{ constant.docs.summary | raw }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if class.properties %}
+    <h2>
+        <a id="content-properties" href="#properties" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Properties
+    </h2>
+
+    {% for property in class.properties %}
+        <h3 class="!text-base !font-standard !mb-2 !mt-3">
+            <a id="content-prop-{{ property.name | slug }}" href="#prop-{{ property.name | slug }}" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+
+            <span class="visibility-{{ property.visibility }}">
+                {{ property.visibility }}
+            </span>
+
+            {% if property.static %}
+                <span class="visibility-static">
+                    static
+                </span>
+            {% endif %}
+
+            <span class="font-semibold">${{ property.name }}</span>
+
+            <span class="inline-block ml-1 opacity-50">
+                :
+                {% if property.type.definition == 'union' %}
+                    {% for type in property.type.types %}
+                        {% if not loop.first %}
+                            |
+                        {% endif %}
+                        {% if type.definition == 'reference' and type.type.linked %}
+                            <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                {{- type.type.name -}}
+                            </a>
+                        {% elseif type.definition == 'reference' %}
+                            {{ type.type.name }}
+                        {% else %}
+                            {{ type.type }}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% if property.type.definition == 'reference' and property.type.type.linked %}
+                        <a href="path:{{ property.type.type.class|replace({'\\': '/'}) }}" title="{{ property.type.type.class }}">
+                            {{- property.type.type.name -}}
+                        </a>
+                    {% elseif property.type.definition == 'reference' %}
+                        {{ property.type.type.name }}
+                    {% else %}
+                        {{ property.type.type }}
+                    {% endif %}
+                {% endif %}
+                {% if property.default %}
+                    <span class="hidden md:inline">
+                        = <code class="language-php">{{ property.default }}</code>
+                    </span>
+                {% endif %}
+            </span>
+        </h3>
+
+        {% if property.inherited %}
+            <div class="text-disclaimer-mobile lg:text-disclaimer mb-2 opacity-50">
+                Inherited from
+                <a href="path:{{ property.inherited.class|replace({'\\': '/'}) }}" title="{{ property.inherited.class}}">
+                    {{ property.inherited.name }}
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="lg:pl-8">
+            {{ property.docs.summary | raw }}
+
+            {{ property.docs.body | raw }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if class.methods %}
+    <h2>
+        <a id="content-methods" href="#methods" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Methods
+    </h2>
+
+    {% for method in class.methods %}
+        {% if not loop.first %}
+            <div class="my-6 border-t border-sky dark:border-navy-light opacity-50"></div>
+        {% endif %}
+
+        <h3 class="!text-base !font-standard !mb-2 !mt-0{% if not loop.first %} !pt-0{% endif %}">
+            <a id="content-method-{{ method.name | slug }}" href="#method-{{ method.name | slug }}" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+
+            <span class="visibility-{{ method.visibility }}">
+                {{ method.visibility }}
+            </span>
+
+            {% if method.static %}
+                <span class="visibility-static">
+                    static
+                </span>
+            {% endif %}
+            {% if method.final %}
+                <span class="visibility-final">
+                    final
+                </span>
+            {% endif %}
+
+            <span class="font-semibold">{{ method.name }}</span> ({%- if method.params|length > 0 -%}
+                    <span class="opacity-70">
+                        {%- for param in method.params -%}
+                            {%- if param.type.definition == 'union' -%}
+                                {%- for type in param.type.types -%}
+                                    {%- if not loop.first %} | {% endif -%}
+                                    {%- if type.definition == 'reference' and type.type.linked -%}
+                                        <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                            {{- type.type.name -}}
+                                        </a>
+                                    {%- elseif type.definition == 'reference'-%}
+                                        <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                                    {%- else -%}
+                                        <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            {%- else -%}
+                                {%- if param.type.definition == 'reference' and param.type.type.linked -%}
+                                    <a href="path:{{ param.type.type.class|replace({'\\': '/'}) }}" title="{{ param.type.type.class }}">
+                                        {{- param.type.type.name -}}
+                                    </a>
+                                {%- elseif param.type.definition == 'reference' -%}
+                                    <span class="text-blue-dark dark:text-blue">{{ param.type.type.name }}</span>
+                                {%- elseif param.type.definition == 'scalar' and param.type.type != 'mixed' -%}
+                                    <span class="text-blue-dark dark:text-blue">{{ param.type.type }}</span>
+                                {%- endif -%}
+                            {%- endif -%}
+                            {%- if param.type.definition != 'scalar' or param.type.type != 'mixed' %} {% endif -%}
+                            ${{ param.name }}
+
+                            {%- if param.default %} = <code class="language-php !bg-transparent !p-0">{{ param.default }}</code>{% endif -%}
+                            {%- if not loop.last %}, {% endif -%}
+                        {%- endfor -%}
+                    </span>
+                {%- endif -%})
+
+            {% if method.returns.type.definition != 'scalar' or method.returns.type.type != 'mixed' %}
+                : <span class="opacity-70">{%- if method.returns.type.definition == 'union' -%}
+                    {%- for type in method.returns.type.types -%}
+                        {%- if not loop.first %} | {% endif -%}
+                        {%- if type.definition == 'reference' and type.type.linked -%}
+                            <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                {{- type.type.name -}}
+                            </a>
+                        {%- elseif type.definition == 'reference'-%}
+                            <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                        {%- else -%}
+                            <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- else -%}
+                    {%- if method.returns.type.definition == 'reference' and method.returns.type.type.linked -%}
+                        <a href="path:{{ method.returns.type.type.class|replace({'\\': '/'}) }}" title="{{ method.returns.type.type.class }}">
+                            {{- method.returns.type.type.name -}}
+                        </a>
+                    {%- elseif method.returns.type.definition == 'reference' -%}
+                        <span class="text-blue-dark dark:text-blue">{{ method.returns.type.type.name }}</span>
+                    {%- elseif method.returns.type.definition == 'scalar' -%}
+                        <span class="text-blue-dark dark:text-blue">{{ method.returns.type.type }}</span>
+                    {%- endif -%}
+                {%- endif -%}</span>
+            {% endif %}
+        </h3>
+
+        {% if method.inherited %}
+            <div class="text-disclaimer-mobile lg:text-disclaimer mb-2 opacity-50">
+                Inherited from
+                <a href="path:{{ method.inherited.class|replace({'\\': '/'}) }}" title="{{ method.inherited.class}}">
+                    {{ method.inherited.name }}
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="lg:pl-8">
+            {{ method.docs.summary | raw }}
+
+            {{ method.docs.body | raw }}
+
+            {% if method.params|length > 0 %}
+                <div class="heading-5 mt-8 text-navy-dark dark:text-white">Parameters</div>
+
+                <div class="table-container !mt-4">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th class="hidden md:table-cell">Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for param in method.params %}
+                            <tr>
+                                <td>
+                                    ${{ param.name }}
+                                </td>
+                                <td class="hidden md:table-cell">
+                                    {%- if param.type.definition == 'union' -%}
+                                        {%- for type in param.type.types -%}
+                                            {%- if not loop.first %} | {% endif -%}
+                                            {%- if type.definition == 'reference' and type.type.linked -%}
+                                                <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                                    {{- type.type.name -}}
+                                                </a>
+                                            {%- elseif type.definition == 'reference'-%}
+                                                <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                                            {%- else -%}
+                                                <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                                            {%- endif -%}
+                                        {%- endfor -%}
+                                    {%- else -%}
+                                        {%- if param.type.definition == 'reference' and param.type.type.linked -%}
+                                            <a href="path:{{ param.type.type.class|replace({'\\': '/'}) }}" title="{{ param.type.type.class }}">
+                                                {{- param.type.type.name -}}
+                                            </a>
+                                        {%- elseif param.type.definition == 'reference' -%}
+                                            <span class="text-blue-dark dark:text-blue">{{ param.type.type.name }}</span>
+                                        {%- elseif param.type.definition == 'scalar' -%}
+                                            <span class="text-blue-dark dark:text-blue">{{ param.type.type }}</span>
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                </td>
+                                <td>
+                                    <div class="block md:hidden">
+                                        {%- if param.type.definition == 'union' -%}
+                                            {%- for type in param.type.types -%}
+                                                {%- if not loop.first %} | {% endif -%}
+                                                {%- if type.definition == 'reference' and type.type.linked -%}
+                                                    <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                                        {{- type.type.name -}}
+                                                    </a>
+                                                {%- elseif type.definition == 'reference'-%}
+                                                    <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                                                {%- else -%}
+                                                    <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                                                {%- endif -%}
+                                            {%- endfor -%}
+                                        {%- else -%}
+                                            {%- if param.type.definition == 'reference' and param.type.type.linked -%}
+                                                <a href="path:{{ param.type.type.class|replace({'\\': '/'}) }}" title="{{ param.type.type.class }}">
+                                                    {{- param.type.type.name -}}
+                                                </a>
+                                            {%- elseif param.type.definition == 'reference' -%}
+                                                <span class="text-blue-dark dark:text-blue">{{ param.type.type.name }}</span>
+                                            {%- elseif param.type.definition == 'scalar' -%}
+                                                <span class="text-blue-dark dark:text-blue">{{ param.type.type }}</span>
+                                            {%- endif -%}
+                                        {%- endif -%}
+                                    </div>
+
+                                    {{ param.summary | raw }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+            <div class="heading-5 mt-8 text-navy-dark dark:text-white">Returns</div>
+
+            <div class="!mt-4">
+                <div>
+                    {%- if method.returns.type.definition == 'union' -%}
+                        {%- for type in method.returns.type.types -%}
+                            {%- if not loop.first %} | {% endif -%}
+                            {%- if type.definition == 'reference' and type.type.linked -%}
+                                <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                    {{- type.type.name -}}
+                                </a>
+                            {%- elseif type.definition == 'reference'-%}
+                                <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                            {%- else -%}
+                                <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                            {%- endif -%}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {%- if method.returns.type.definition == 'reference' and method.returns.type.type.linked -%}
+                            <a href="path:{{ method.returns.type.type.class|replace({'\\': '/'}) }}" title="{{ method.returns.type.type.class }}">
+                                {{- method.returns.type.type.name -}}
+                            </a>
+                        {%- elseif method.returns.type.definition == 'reference' -%}
+                            <span class="text-blue-dark dark:text-blue">{{ method.returns.type.type.name }}</span>
+                        {%- elseif method.returns.type.definition == 'scalar' -%}
+                            <span class="text-blue-dark dark:text-blue">{{ method.returns.type.type }}</span>
+                        {%- endif -%}
+                    {%- endif -%}
+                </div>
+                <div class="lg:pl-8">
+                    {{ method.docs.return.summary | raw }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

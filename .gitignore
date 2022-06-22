@@ -1,0 +1,9 @@
+# Ignore Node modules
+node_modules
+
+# Ignore webpack
+mix.webpack.js
+
+# Ignore compiled assets
+assets/css/theme.css
+assets/js/build/app.js

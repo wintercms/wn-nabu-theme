@@ -1,0 +1,41 @@
+.popover {
+    @apply bg-grey-50 dark:bg-navy-light drop-shadow-xl p-4 hidden z-[38] rounded-md;
+
+    &[data-show] {
+        @apply block;
+    }
+
+    [data-popper-arrow],
+    [data-popper-arrow]::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: inherit;
+    }
+
+    [data-popper-arrow] {
+        visibility: hidden;
+    }
+
+    [data-popper-arrow]:before {
+        visibility: visible;
+        content: '';
+        transform: rotate(45deg);
+    }
+
+    &[data-popper-placement^='top'] > [data-popper-arrow] {
+        bottom: -4px;
+    }
+
+    &[data-popper-placement^='bottom'] > [data-popper-arrow] {
+        top: -4px;
+    }
+
+    &[data-popper-placement^='left'] > [data-popper-arrow] {
+        right: -4px;
+    }
+
+    &[data-popper-placement^='right'] > [data-popper-arrow] {
+        left: -4px;
+    }
+}

@@ -1,0 +1,174 @@
+description = "Default layout"
+==
+{% put head %}
+    <meta name="docRoot" content="{{ this.page.fileName | page({ slug: '' }) }}">
+{% endput %}
+
+{% partial "site/header" %}
+
+<section id="navigation" class="
+    bg-grey-100 dark:bg-navy-darker fixed hidden lg:flex flex-col items-start
+    w-full opacity-0 lg:opacity-100 lg:mt-0 lg:w-[280px] xl:w-[350px] h-screen
+    gap-6 lg:gap-8 py-6 lg:py-10 px-6 z-50
+">
+    <div class="w-full mt-4 lg:mt-0 flex flex-row-reverse gap-6 lg:flex-col items-center lg:items-start">
+        <div class="w-auto lg:w-full h-10 flex flex-row justify-end lg:gap-2 xl:gap-8">
+            <a
+                href="{{ 'home' | page }}"
+                title="Winter CMS Documentation"
+                class="
+                    hidden lg:block w-1/2 text-navy-light dark:text-grey-200 flex-grow
+            ">
+                {% partial 'site/logo' %}
+            </a>
+
+            <div id="settings" class="
+                rounded-md bg-grey-200 dark:bg-navy hover:bg-grey-300 dark:hover:bg-navy-light
+                px-4 py-2 transition-colors h-10 flex flex-row gap-2
+                font-semibold text-caption-mobile lg:text-caption cursor-pointer self-end
+            ">
+                <span class="block flex-shrink-0 whitespace-nowrap">
+                    {% partial 'docs/short-title' docId=docId %}
+                </span>
+
+                <span class="block arrow flex-shrink-0"></span>
+            </div>
+
+            <div
+                role="tooltip"
+                class="popover w-72"
+                data-popover
+                data-placement="bottom-end"
+                data-target="#settings"
+            >
+                <div class="flex flex-col gap-2">
+                    <div class="
+                        text-caption-mobile lg:text-caption font-semibold text-grey-500 dark:text-blue
+                    ">
+                        Version 1.2
+                    </div>
+
+                    <div class="flex flex-row divide-x divide-grey-500 dark:divide-blue-dark">
+                        <a
+                            href="{{ 'winter-cms-12-documentation' | page({ slug: '' }) }}"
+                            class="
+                                block text-center text-grey-800 dark:text-white opacity-30 hover:opacity-70 pr-3 flex-grow
+                                {% if docId == 'winter.winterdocs.winterbranch12' %} opacity-100 {% endif %}
+                            "
+                        >
+                            Docs
+                        </a>
+
+                        <a
+                            href="{{ 'winter-cms-12-api-documentation' | page({ slug: '' }) }}"
+                            class="
+                                block text-center text-grey-800 dark:text-white opacity-30 hover:opacity-70 px-3 flex-grow
+                                {% if docId == 'winter.winterdocs.winterbranch12api' %} opacity-100 {% endif %}
+                            "
+                        >
+                            API
+                        </a>
+
+                        <a
+                            href="{{ 'winter-cms-12-markup-documentation' | page({ slug: '' }) }}"
+                            class="
+                                block text-center text-grey-800 dark:text-white opacity-30 hover:opacity-70 px-3 flex-grow
+                                {% if docId == 'winter.winterdocs.winterbranch12markup' %} opacity-100 {% endif %}
+                            "
+                        >
+                            Markup
+                        </a>
+
+                        <a
+                            href="{{ 'winter-cms-12-user-interface-documentation' | page({ slug: '' }) }}"
+                            class="
+                                block text-center text-grey-800 dark:text-white opacity-30 hover:opacity-70 pl-3 flex-grow
+                                {% if docId == 'winter.winterdocs.winterbranch12ui' %} opacity-100 {% endif %}
+                            "
+                        >
+                            UI
+                        </a>
+                    </div>
+
+                    <div class="flex flex-row gap-4 mt-3 pt-4 border-t border-grey-500 dark:border-blue-dark border-opacity-30 dark:border-opacity-30">
+                        <a
+                            href="#"
+                            class="block text-center h-7 w-1/3 text-grey-800 dark:text-white opacity-30 hover:opacity-70"
+                            data-theme="light"
+                            title="Light theme"
+                        >
+                        </a>
+
+                        <a
+                            href="#"
+                            class="block text-center h-7 w-1/3 text-grey-800 dark:text-white opacity-30 hover:opacity-70"
+                            data-theme="dark"
+                            title="Dark theme"
+                        >
+                        </a>
+
+                        <a
+                            href="#"
+                            class="block text-center h-7 w-1/3 text-grey-800 dark:text-white opacity-30 hover:opacity-70"
+                            data-theme="system"
+                            title="Follow system preferences"
+                        >
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full flex-grow lg:flex-grow-0">
+            <form class="w-full">
+                <div class="search-input w-full">
+                    <input
+                        type="text"
+                        name="search"
+                        class="
+                            bg-grey-200 focus:bg-grey-300 hover:bg-grey-300
+                            dark:bg-navy dark:focus:bg-navy-light dark:hover:bg-navy-light
+                            transition-colors outline-none rounded-md py-2 pl-4 px-8 w-full
+                            text-grey-800 dark:text-white
+                            placeholder:text-grey-500 dark:placeholder:text-blue-dark
+                        "
+                        placeholder="Search docs"
+                    >
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="docs-menu" class="
+        flex-grow w-full overflow-y-auto sidebar-menu
+        scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500
+    ">
+        {% partial docsPage ~ "::menu" %}
+    </div>
+</section>
+
+<section
+    id="content"
+    class="w-full lg:ml-[280px] xl:ml-[350px] lg:w-8/12 xl:w-3/5 py-6 lg:py-10 px-6 lg:px-16 rich-content"
+>
+    <div id="docs-content" class="pb-10 pt-16 lg:pt-0 lg:pb-20 break-words md:break-normal">
+        {% page %}
+    </div>
+</section>
+
+<section
+    id="toc"
+    class="hidden xl:w-1/4 xl:block py-10 pr-8 2xl:pl-12 toc-menu"
+>
+    <div
+        id="docs-toc"
+        class="overflow-y-auto h-full"
+        data-sticky
+        data-offset-top="40"
+        data-no-auto-height
+    >
+        {% partial docsPage ~ "::toc" docId=docId pagePath=pagePath %}
+    </div>
+</section>
+
+{% partial "site/footer" %}

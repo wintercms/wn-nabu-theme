@@ -1,0 +1,13 @@
+description = 'Short title for documentation';
+==
+{% if docId == 'winter.winterdocs.winterbranch12' %}
+    {% set docTitle = 'v1.2 Docs' %}
+{% elseif docId == 'winter.winterdocs.winterbranch12api' %}
+    {% set docTitle = 'v1.2 API' %}
+{% elseif docId == 'winter.winterdocs.winterbranch12markup' %}
+    {% set docTitle = 'v1.2 Markup' %}
+{% elseif docId == 'winter.winterdocs.winterbranch12ui' %}
+    {% set docTitle = 'v1.2 UI' %}
+{% endif %}
+
+{{ docTitle | default('Unknown') }}

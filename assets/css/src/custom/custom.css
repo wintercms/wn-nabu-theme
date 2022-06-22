@@ -1,0 +1,129 @@
+@font-face {
+    font-family: "File Font";
+    src: url('../fonts/vendor/ffont.woff') format('woff'),
+        url('../fonts/vendor/ffont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "Icon Font";
+    src: url('../fonts/vendor/icomoon.woff') format('woff');
+}
+
+#settings .arrow {
+    &::after {
+        content: '\f0d7';
+        font-family: 'Icon Font';
+        @apply inline-block relative pl-[2px] text-disclaimer-mobile;
+    }
+}
+
+a[data-theme="dark"] {
+    &::after {
+        content: '\e901';
+        font-family: 'Icon Font';
+        @apply inline-block relative text-[28px];
+    }
+}
+
+a[data-theme="light"] {
+    &::after {
+        content: '\e903';
+        font-family: 'Icon Font';
+        @apply inline-block relative text-[28px];
+    }
+}
+
+a[data-theme="system"] {
+    &::after {
+        content: '\e902';
+        font-family: 'Icon Font';
+        @apply inline-block relative text-[28px];
+    }
+}
+
+.search-input {
+    @apply relative;
+
+    &::after {
+        content: '\e900';
+        font-family: 'Icon Font';
+        @apply absolute top-1/2 right-2 -translate-y-1/2 text-[22px] opacity-30;
+    }
+}
+
+/* Stripe loader */
+body .stripe-loading-indicator .stripe,
+body .stripe-loading-indicator .stripe-loaded {
+    @apply bg-blue h-1;
+    box-shadow: none;
+}
+
+/* Github button logo */
+a.github::before {
+    content: '\f09b';
+    font-family: 'Icon Font';
+    @apply inline-block relative text-[16px] pr-1 top-[2px];
+}
+
+/* Mobile menu */
+.mobile-logo {
+    @apply scale-150;
+    animation: logoHide 600ms ease-out 1 3s backwards;
+    transition: width 175ms ease-out,
+                transform 175ms ease;
+}
+
+body.mobile-menu-shown .mobile-logo {
+    animation-play-state: paused;
+    @apply w-32 scale-100;
+}
+
+@media (max-width: 1024px) {
+    #navigation {
+        @apply pt-0 top-[60px];
+        height: calc(100% - 60px);
+    }
+}
+
+html[data-scroll]:not([data-scroll="0"], [data-direction="up"]) body:not(.mobile-menu-shown) div.nav-menu {
+    @apply -translate-y-full;
+}
+
+@keyframes logoHide {
+    0% {
+        @apply w-32;
+        @apply scale-100;
+    }
+
+    85% {
+        @apply scale-100;
+    }
+
+    100% {
+        @apply w-7;
+        @apply scale-150;
+    }
+}
+
+/* Responsive tables */
+div.table-container {
+    @apply -mx-6 w-auto px-6 overflow-x-auto flex flex-row;
+
+    &::after {
+        content: '';
+        @apply block;
+    }
+
+    table {
+        @apply lg:mx-0 w-full;
+    }
+}
+
+pre {
+    @apply -mx-6 md:mx-0 overflow-x-auto flex flex-row;
+
+    &::after {
+        content: '';
+        @apply block;
+    }
+}

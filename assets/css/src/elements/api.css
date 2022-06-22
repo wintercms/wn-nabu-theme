@@ -1,0 +1,31 @@
+span[class^="visibility"] {
+    @apply inline-block px-2 py-px rounded-md mr-1 bg-grey-200 dark:bg-navy;
+
+    &.visibility-public {
+        background-color: #d0e5cc;
+    }
+
+    &.visibility-protected {
+        background-color: #c8c5e0;
+    }
+
+    &.visibility-private {
+        background-color: #e0d7be;
+    }
+}
+
+html.dark {
+    span[class^="visibility"] {
+        &.visibility-public {
+            background-color: #2c4f25;
+        }
+
+        &.visibility-protected {
+            background-color: #3a3666;
+        }
+
+        &.visibility-private {
+            background-color: #554123;
+        }
+    }
+}

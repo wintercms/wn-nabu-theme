@@ -1,0 +1,151 @@
+
+.rich-content {
+    a {
+        @apply text-blue transition-colors hover:text-green-dark dark:hover:text-green underline underline-offset-4;
+
+        &.code-link {
+            @apply no-underline;
+
+            code {
+                @apply text-blue transition-colors hover:text-green-dark dark:hover:text-green;
+            }
+        }
+
+        &.external-link {
+            &::after {
+                content: '\f08e';
+                font-family: 'Icon Font';
+                @apply opacity-50 inline-block relative pl-[2px] -top-1 text-caption-mobile lg:text-caption;
+            }
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply mt-8 relative;
+
+        &:first-child {
+            @apply mt-0;
+        }
+
+        .heading-permalink {
+            @apply absolute -left-6 text-blue-dark dark:text-blue hover:text-green-dark dark:hover:text-green opacity-100 text-right lg:-left-6 lg:text-center lg:opacity-0 transition-all w-5 lg:w-6;
+        }
+
+        &:hover .heading-permalink,
+        &:focus .heading-permalink {
+            @apply opacity-100;
+        }
+    }
+
+    h1 {
+        @apply mb-8;
+    }
+
+    h2 {
+        @apply pt-5 lg:pt-10 mb-8 pb-4 border-b border-sky dark:border-navy-light;
+    }
+
+    h3 {
+        @apply pt-3 lg:pt-4 mb-8;
+    }
+
+    h4 {
+        @apply pt-2 mb-8;
+    }
+
+    p {
+        @apply mt-4;
+
+        &:first-of-type {
+            @apply mt-0;
+        }
+    }
+
+    ul,
+    ol {
+        @apply my-4 pl-8;
+    }
+
+    ol > li {
+        @apply list-decimal py-1;
+    }
+
+    ul > li {
+        @apply list-disc py-1;
+    }
+
+    ul > li > ul,
+    ul > li > ol,
+    ol > li > ul
+    ol > li > ol {
+        @apply my-0;
+    }
+
+    h1, h1 > a {
+        @apply font-heading font-light text-h2 tracking-normal lg:text-h1 lg:tracking-tight text-navy-dark dark:text-white no-underline;
+    }
+
+    h2, h2 > a {
+        @apply font-heading font-light text-h3 lg:text-h2 text-navy-dark dark:text-white no-underline;
+    }
+
+    h3, h3 > a {
+        @apply font-heading font-light text-h4 lg:text-h3 text-navy-dark dark:text-white no-underline;
+    }
+
+    h4, h4 > a {
+        @apply font-bold text-h5 lg:text-h4 text-navy-dark dark:text-white no-underline;
+    }
+
+    h5, h5 > a {
+        @apply font-bold text-h6 lg:text-h5 text-navy-dark dark:text-white no-underline;
+    }
+
+    h6, h6 > a {
+        @apply font-bold text-h6 text-navy-dark dark:text-white no-underline;
+    }
+
+    pre {
+        @apply my-8 p-6 bg-grey-100 dark:bg-navy-darker;
+
+        code {
+            @apply bg-transparent p-0 mx-0 rounded-none text-grey-700 dark:text-grey-200 font-code;
+        }
+    }
+
+    code {
+        @apply bg-grey-100 dark:bg-navy-darker p-1 mx-px rounded-md text-orange dark:text-orange-light text-code-mobile lg:text-code font-code;
+    }
+
+    blockquote {
+        @apply bg-sky-light text-grey-800 dark:bg-navy-light dark:text-grey-300 py-4 px-6 my-8 rounded-md;
+
+        strong {
+            @apply text-grey-900 dark:text-grey-100;
+        }
+    }
+
+    div.table-container {
+        @apply my-8;
+
+        table {
+            tbody {
+                @apply border-t border-l border-grey-300 dark:border-navy;
+            }
+
+            thead th,
+            thead td {
+                @apply border-r-0 text-left border-blue text-blue dark:border-blue-dark dark:text-blue-dark;
+            }
+
+            th, td {
+                @apply p-2 border-b border-r border-grey-300 dark:border-navy;
+            }
+        }
+    }
+}

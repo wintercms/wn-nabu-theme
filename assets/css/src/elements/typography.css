@@ -1,0 +1,23 @@
+.heading {
+    &-display {
+        @apply font-heading text-h1 font-bold tracking-tight lg:text-heading lg:font-normal lg:tracking-tighter;
+    }
+    &-1 {
+        @apply font-heading font-light text-h2 tracking-normal lg:text-h1 lg:tracking-tight;
+    }
+    &-2 {
+        @apply font-heading font-light text-h3 lg:text-h2 tracking-tight;
+    }
+    &-3 {
+        @apply font-heading font-normal text-h4 lg:text-h3 tracking-tight;
+    }
+    &-4 {
+        @apply font-bold text-h5 lg:text-h4 tracking-tight;
+    }
+    &-5 {
+        @apply font-bold text-h6 lg:text-h5 tracking-tight;
+    }
+    &-6 {
+        @apply font-bold text-h6 tracking-tight;
+    }
+}
