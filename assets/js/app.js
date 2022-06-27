@@ -11,6 +11,7 @@ import UiHandler from './src/UiHandler';
 import Overlay from './src/Overlay';
 import CollapsibleMenu from './src/CollapsibleMenu';
 import ScrollPosition from './src/ScrollPosition';
+import BackendPreviewer from './src/BackendPreviewer';
 
 // Set up UI scripts
 ((Snowboard) => {
@@ -18,6 +19,7 @@ import ScrollPosition from './src/ScrollPosition';
     Snowboard.addPlugin('darkMode', DarkMode);
     Snowboard.addPlugin('codeBlock', CodeBlock);
     Snowboard.addPlugin('codeBlockStyle', CodeBlockStyle);
+    Snowboard.addPlugin('backendPreviewer', BackendPreviewer);
     Snowboard.addPlugin('hashbangs', Hashbangs);
     Snowboard.addPlugin('scrollPosition', ScrollPosition);
     Snowboard.addPlugin('positionTracker', PositionTracker);

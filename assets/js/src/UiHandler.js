@@ -21,8 +21,13 @@ export default class UiHandler extends Snowboard.Singleton {
         });
 
         // Attach code elements
-        document.querySelectorAll('code[class^="language-"]').forEach((element) => {
+        document.querySelectorAll('code[class^="language-"]:not(.language-backend)').forEach((element) => {
             this.snowboard.codeBlock(element);
+        });
+
+        // Attach backend elements
+        document.querySelectorAll('code.language-backend').forEach((element) => {
+            this.snowboard.backendPreviewer(element);
         });
 
         // Create popovers
@@ -40,8 +45,12 @@ export default class UiHandler extends Snowboard.Singleton {
             this.snowboard.popover(element);
         });
 
-        updatedElement.querySelectorAll('code[class^="language-"]').forEach((element) => {
+        updatedElement.querySelectorAll('code[class^="language-"]:not(.language-backend)').forEach((element) => {
             this.snowboard.codeBlock(element);
+        });
+
+        updatedElement.querySelectorAll('code.language-backend').forEach((element) => {
+            this.snowboard.backendPreviewer(element);
         });
     }
 }

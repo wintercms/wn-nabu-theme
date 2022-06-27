@@ -122,8 +122,16 @@ div.table-container {
 pre {
     @apply -mx-6 md:mx-0 overflow-x-auto flex flex-row;
 
+    code.language-backend {
+        @apply invisible;
+    }
+
     &::after {
         content: '';
         @apply block;
     }
+}
+
+iframe.backend-preview {
+    @apply w-full my-6;
 }

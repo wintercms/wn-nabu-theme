@@ -4,7 +4,9 @@
     {% endput %}
 {% endif %}
 
+{% put head %}
 <meta name="og:title" content="{{ frontMatter.og.title|default(title) }}">
 <meta name="og:description" content="{{ frontMatter.og.description|default(frontMatter.description) }}">
+{% endput %}
 
 {{ content | raw }}
