@@ -229,7 +229,12 @@ export default class DocPageLoader extends Snowboard.Singleton {
                 page: element.dataset.docPage
             },
             flash: true,
-            success: (data) => {
+            error: (message, request) => {
+                if (request.responseData.error) {
+                    this.snowboard.flash(request.responseData.error, 'error');
+                }
+            },
+            success: (data, request) => {
                 document.querySelector('title').innerText = data.title;
                 this.cached[element.dataset.docPage] = data;
                 scrollTo(0, 0);
@@ -317,6 +322,11 @@ export default class DocPageLoader extends Snowboard.Singleton {
                     page: state.path
                 },
                 flash: true,
+                error: (message, request) => {
+                    if (request.responseData.error) {
+                        this.snowboard.flash(request.responseData.error, 'error');
+                    }
+                },
                 success: (data) => {
                     document.querySelector('title').innerText = data.title;
                     this.cached[state.path] = data;
