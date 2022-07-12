@@ -12,6 +12,7 @@ import Overlay from './src/Overlay';
 import CollapsibleMenu from './src/CollapsibleMenu';
 import ScrollPosition from './src/ScrollPosition';
 import BackendPreviewer from './src/BackendPreviewer';
+import Modal from './src/Modal';
 
 // Set up UI scripts
 ((Snowboard) => {
@@ -29,6 +30,7 @@ import BackendPreviewer from './src/BackendPreviewer';
     Snowboard.addPlugin('overlay', Overlay);
     Snowboard.addPlugin('collapsibleMenu', CollapsibleMenu);
     Snowboard.addPlugin('mobileMenu', MobileMenu);
+    Snowboard.addPlugin('modal', Modal);
 })(window.Snowboard);
 
 // Disable Prism from automatically rendering

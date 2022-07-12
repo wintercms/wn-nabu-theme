@@ -11,5 +11,6 @@
 @import './elements/typography.css';
 @import './elements/rich-content.css';
 @import './elements/popover.css';
+@import './elements/modal.css';
 @import './elements/api.css';
 @import './custom/custom.css';

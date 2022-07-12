@@ -1,0 +1,10 @@
+div.modal-content {
+    display: none;
+}
+
+aside.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -41,7 +41,7 @@ a[data-theme="system"] {
     }
 }
 
-.search-input {
+a[data-search] {
     @apply relative;
 
     &::after {

@@ -120,22 +120,18 @@ description = "Default layout"
         </div>
 
         <div class="w-full flex-grow lg:flex-grow-0">
-            <form class="w-full">
-                <div class="search-input w-full">
-                    <input
-                        type="text"
-                        name="search"
-                        class="
-                            bg-grey-200 focus:bg-grey-300 hover:bg-grey-300
-                            dark:bg-navy dark:focus:bg-navy-light dark:hover:bg-navy-light
-                            transition-colors outline-none rounded-md py-2 pl-4 px-8 w-full
-                            text-grey-800 dark:text-white
-                            placeholder:text-grey-500 dark:placeholder:text-blue-dark
-                        "
-                        placeholder="Search docs"
-                    >
-                </div>
-            </form>
+            <a
+                data-search
+                class="
+                    block cursor-pointer
+                    bg-grey-200 focus:bg-grey-300 hover:bg-grey-300
+                    dark:bg-navy dark:focus:bg-navy-light dark:hover:bg-navy-light
+                    transition-colors outline-none rounded-md py-2 pl-4 px-8 w-full
+                    text-grey-500 dark:text-blue-dark
+                "
+            >
+                Search docs
+            </a>
         </div>
     </div>
 
@@ -170,5 +166,21 @@ description = "Default layout"
         {% partial docsPage ~ "::toc" docId=docId pagePath=pagePath %}
     </div>
 </section>
+
+<div class="modal-content" data-search>
+    <div class="w-[300px] lg:w-[800px] h-[500px] bg-grey-200 dark:bg-navy-light rounded">
+        <input
+            type="text"
+            class="
+                block w-full text-h5 text-grey-800 dark:text-white p-4
+                bg-grey-300 dark:bg-navy
+                border-b border-grey-400 dark:border-blue-dark rounded-tl rounded-tr
+                outline-none
+                placeholder:text-grey-500 placeholder:dark:text-blue-dark
+            "
+            placeholder="Enter your search query"
+        >
+    </div>
+</div>
 
 {% partial "site/footer" %}

@@ -34,6 +34,10 @@ export default class UiHandler extends Snowboard.Singleton {
         document.querySelectorAll('[data-popover]').forEach((element) => {
             this.snowboard.popover(element);
         });
+
+        document.querySelector('a[data-search]').addEventListener('click', (event) => {
+            this.snowboard.modal(document.querySelector('div[data-search]'));
+        });
     }
 
     ajaxUpdate(updatedElement) {
