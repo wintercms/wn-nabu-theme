@@ -5,6 +5,7 @@ export default class MobileMenu extends Snowboard.Singleton {
         this.docsMenu = null;
         this.hamburger = null;
         this.active = false;
+        this.overlay = this.snowboard.overlay();
 
         this.events = {
             click: (event) => this.onMenuToggle(event),
@@ -61,13 +62,13 @@ export default class MobileMenu extends Snowboard.Singleton {
 
         if (this.active) {
             document.body.classList.add('mobile-menu-shown');
-            this.snowboard.overlay()
+            this.overlay
                 .setColor(this.snowboard.darkMode().isDark() ? 'rgb(5, 16, 22)' : 'rgb(241, 245, 249)')
                 .setOpacity(1)
                 .show();
         } else {
             document.body.classList.remove('mobile-menu-shown');
-            this.snowboard.overlay().hide();
+            this.overlay.hide();
         }
     }
 
@@ -75,7 +76,7 @@ export default class MobileMenu extends Snowboard.Singleton {
         this.active = false;
         this.animateBurger();
         document.body.classList.remove('mobile-menu-shown');
-        this.snowboard.overlay().hide();
+        this.overlay.hide();
     }
 
     onOverlayShown() {

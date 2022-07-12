@@ -6,7 +6,7 @@
  * @copyright 2021 Winter.
  * @author Ben Thomson <git@alfreido.com>
  */
- export default class Overlay extends Snowboard.Singleton {
+ export default class Overlay extends Snowboard.PluginBase {
     /**
      * Constructor.
      */
@@ -26,24 +26,6 @@
      */
     dependencies() {
         return ['transition'];
-    }
-
-    /**
-     * Defines listeners for events.
-     *
-     * @returns {Object}
-     */
-    listens() {
-        return {
-            ready: 'ready',
-        };
-    }
-
-    /**
-     * Ready event handler.
-     */
-    ready() {
-        this.createOverlay();
     }
 
     /**
@@ -110,25 +92,31 @@
      * Fires an "overlay.show" event, and follows up with an "overlay.shown" when the transition completes.
      */
     show() {
+        if (!this.overlay) {
+            this.createOverlay();
+            this.setStyle();
+        }
         if (this.shown) {
             return;
         }
 
-        this.snowboard.globalEvent('overlay.show', this.overlay);
-        this.shown = true;
-        this.overlay.style.width = '100%';
-        this.overlay.style.height = '100%';
-
-        // Prevent scrolling of the body while an overlay is shown
-        document.body.style.overflowY = 'hidden';
-
         window.requestAnimationFrame(() => {
-            this.overlay.style.opacity = this.opacity;
+            this.snowboard.globalEvent('overlay.show', this.overlay);
+            this.shown = true;
+            this.overlay.style.width = '100%';
+            this.overlay.style.height = '100%';
 
-            this.overlay.addEventListener('transitionend', () => {
-                this.snowboard.globalEvent('overlay.shown', this.overlay);
-            }, {
-                once: true,
+            // Prevent scrolling of the body while an overlay is shown
+            document.body.style.overflowY = 'hidden';
+
+            window.requestAnimationFrame(() => {
+                this.overlay.style.opacity = this.opacity;
+
+                this.overlay.addEventListener('transitionend', () => {
+                    this.snowboard.globalEvent('overlay.shown', this.overlay);
+                }, {
+                    once: true,
+                });
             });
         });
     }
@@ -139,7 +127,7 @@
      * Fires an "overlay.hide" event, and follows up with an "overlay.hidden" when the transition completes.
      */
     hide() {
-        if (!this.shown) {
+        if (!this.shown || !this.overlay) {
             return;
         }
 
@@ -180,7 +168,6 @@
      */
     setColor(color) {
         this.color = String(color);
-        this.setStyle();
         return this;
     }
 
@@ -194,7 +181,6 @@
      */
     setOpacity(opacity) {
         this.opacity = Number(opacity);
-        this.setStyle();
         return this;
     }
 
@@ -208,7 +194,6 @@
      */
     setSpeed(speed) {
         this.speed = Number(speed);
-        this.setStyle();
         return this;
     }
 
@@ -222,7 +207,6 @@
      */
      setZIndex(zIndex) {
         this.zIndex = Number(zIndex);
-        this.setStyle();
         return this;
     }
 }
