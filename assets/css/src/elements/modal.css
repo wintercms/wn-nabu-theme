@@ -7,4 +7,19 @@ aside.modal {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    &.open-in, &.close-out {
+        opacity: 0;
+        transform: translate(-50%, -47.5%);
+    }
+
+    &.open-active, &.close-active {
+        transition: opacity 200ms ease,
+                    transform 200ms ease;
+    }
+
+    &.open-out, &.close-in {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }

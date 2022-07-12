@@ -20,15 +20,6 @@
     }
 
     /**
-     * Defines the dependencies.
-     *
-     * @returns {Array}
-     */
-    dependencies() {
-        return ['transition'];
-    }
-
-    /**
      * Destructor.
      *
      * Destroys the overlay.
@@ -46,7 +37,7 @@
         this.overlay.id = 'overlay';
         this.setStyle();
         this.overlay.addEventListener('click', (event) => {
-            this.snowboard.globalEvent('overlay.clicked', this.overlay, event);
+            this.snowboard.globalEvent('overlay.clicked', this, event);
         });
 
         document.body.appendChild(this.overlay);
@@ -68,6 +59,7 @@
         this.overlay.style.position = 'fixed';
         this.overlay.style.top = 0;
         this.overlay.style.left = 0;
+        this.overlay.style.opacity = 0;
         this.overlay.style.zIndex = this.zIndex;
         this.overlay.style.transitionProperty = 'opacity';
         this.overlay.style.transitionTimingFunction = 'ease-out';
@@ -101,7 +93,7 @@
         }
 
         window.requestAnimationFrame(() => {
-            this.snowboard.globalEvent('overlay.show', this.overlay);
+            this.snowboard.globalEvent('overlay.show', this);
             this.shown = true;
             this.overlay.style.width = '100%';
             this.overlay.style.height = '100%';
@@ -113,7 +105,7 @@
                 this.overlay.style.opacity = this.opacity;
 
                 this.overlay.addEventListener('transitionend', () => {
-                    this.snowboard.globalEvent('overlay.shown', this.overlay);
+                    this.snowboard.globalEvent('overlay.shown', this);
                 }, {
                     once: true,
                 });
@@ -131,7 +123,7 @@
             return;
         }
 
-        this.snowboard.globalEvent('overlay.hide', this.overlay);
+        this.snowboard.globalEvent('overlay.hide', this);
         this.overlay.style.opacity = 0;
 
         document.body.style.overflowY = null;
@@ -140,7 +132,7 @@
             this.shown = false;
             this.overlay.style.width = '0px';
             this.overlay.style.height = '0px';
-            this.snowboard.globalEvent('overlay.hidden', this.overlay);
+            this.snowboard.globalEvent('overlay.hidden', this);
         }, {
             once: true,
         });

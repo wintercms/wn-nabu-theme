@@ -79,7 +79,10 @@ export default class MobileMenu extends Snowboard.Singleton {
         this.overlay.hide();
     }
 
-    onOverlayShown() {
+    onOverlayShown(overlayInst) {
+        if (this.overlay !== overlayInst) {
+            return;
+        }
         if (this.active) {
             this.menu.style.display = 'flex';
             this.menu.style.transition = 'opacity 300ms ease';
@@ -89,7 +92,10 @@ export default class MobileMenu extends Snowboard.Singleton {
         }
     }
 
-    onOverlayHide() {
+    onOverlayHide(overlayInst) {
+        if (this.overlay !== overlayInst) {
+            return;
+        }
         if (!this.active) {
             this.menu.style.display = 'none';
             this.menu.style.opacity = 0;

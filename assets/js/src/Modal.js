@@ -83,12 +83,16 @@ export default class Modal extends Snowboard.PluginBase {
             .setZIndex(this.config.get('overlayZIndex'))
             .show();
 
-        this.focusOnFirstItem();
+        this.snowboard.transition(this.modal, 'open', () => {
+            this.focusOnFirstItem();
+        });
     }
 
     close() {
-        document.body.removeChild(this.modal);
         this.overlay.hide();
+        this.snowboard.transition(this.modal, 'close', () => {
+            document.body.removeChild(this.modal);
+        });
     }
 
     getFocusableElements() {
