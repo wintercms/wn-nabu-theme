@@ -134,6 +134,9 @@ export default class DocPageLoader extends Snowboard.Singleton {
     getPagePath(element) {
         const docRoot = this.docsRoot();
         const link = element.getAttribute('href');
+        if (!link) {
+            return false;
+        }
         let path = link.replace(`${docRoot}/`, '').replace(/#.*$/, '');
 
         // If this path looks external, don't handle the path
