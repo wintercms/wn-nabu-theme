@@ -23,7 +23,9 @@
         "source": "https://github.com/wintercms/wn-nabu-theme"
     },
     "require": {
-        "composer/installers": "~1.0"
+        "composer/installers": "~1.11",
+        "winter/wn-docs-plugin": "dev-main",
+        "winter/wn-search-plugin": "dev-main"
     },
     "extra": {
         "installer-name": "nabu"
