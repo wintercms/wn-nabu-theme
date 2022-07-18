@@ -24,7 +24,7 @@
     },
     "require": {
         "composer/installers": "~1.11",
-        "winter/wn-docs-plugin": "dev-main",
+        "winter/wn-docs-plugin": "dev-wip/api-parser",
         "winter/wn-search-plugin": "dev-main"
     },
     "extra": {
