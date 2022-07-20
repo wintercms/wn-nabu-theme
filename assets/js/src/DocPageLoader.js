@@ -219,6 +219,11 @@ export default class DocPageLoader extends Snowboard.Singleton {
             return;
         }
 
+        // If any meta or control keys are held during click, allow the browser to handle this click.
+        if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+            return;
+        }
+
         event.preventDefault();
 
         if (this.cached[element.dataset.docPage]) {
