@@ -82,12 +82,14 @@
         if (scrollTop <= 80) {
             document.querySelector(`#docs-toc ul li a[href="#${this.getFirstAnchor()}"]`).parentElement
                 .classList.add('active');
+            this.updateHash(this.getFirstAnchor());
             return;
         }
 
         if (scrollBottom >= document.body.scrollHeight) {
             document.querySelector(`#docs-toc ul li a[href="#${this.getLastAnchor()}"]`).parentElement
                 .classList.add('active');
+                this.updateHash(this.getLastAnchor());
             return;
         }
 
@@ -104,6 +106,7 @@
         if (currentAnchor) {
             document.querySelector(`#docs-toc ul li a[href="#${currentAnchor}"]`).parentElement
                 .classList.add('active');
+            this.updateHash(currentAnchor);
         }
     }
 
@@ -129,5 +132,22 @@
         }
 
         return top;
+    }
+
+    /**
+     * Updates the current hashbang and history as the user scrolls through the documentation.
+     *
+     * @param {String} anchor
+     */
+    updateHash(anchor) {
+        const currentHash = window.location.hash.replace('#', '');
+        if (currentHash === anchor) {
+            return;
+        }
+
+        // Recreate URL with hash change
+        const newUrl = window.location.pathname + window.location.search + '#' + anchor;
+
+        history.replaceState(history.state, '', newUrl);
     }
 }
