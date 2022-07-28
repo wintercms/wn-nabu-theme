@@ -15,6 +15,9 @@ export default class Modal extends Snowboard.PluginBase {
         this.config = this.snowboard.dataConfig(this, element);
         this.overlay = this.snowboard.overlay();
         this.modal = null;
+        this.events = {
+            keydown: (event) => this.onKeyDown(event),
+        };
 
         this.createModal();
     }
@@ -37,7 +40,9 @@ export default class Modal extends Snowboard.PluginBase {
     /**
      * Default configuration options.
      *
+     * - `data-allow-multiple`: Allow multiple copies of the same modal.
      * - `data-class`: Specifies the class applied to the modal.
+     * - `data-esc-close="false"`: Disables the closing of the modal when the escape key is pressed.
      * - `data-enable-scroll`: Enables scrolling of the page behind the modal.
      * - `data-overlay-close="false"`: Disables the closing of the modal when clicking on the
      *  overlay outside of the modal.
@@ -50,7 +55,9 @@ export default class Modal extends Snowboard.PluginBase {
      */
     defaults() {
         return {
+            allowMultiple: false,
             class: 'modal',
+            escClose: true,
             enableScroll: false,
             overlayClose: true,
             overlayColor: '#051016',
@@ -66,6 +73,15 @@ export default class Modal extends Snowboard.PluginBase {
      * @returns {void}
      */
     createModal() {
+        if (this.config.get('allowMultiple') === false) {
+            if (this.element.dataset.modalOpened) {
+                this.destruct();
+                return;
+            }
+
+            this.element.dataset.modalOpened = true;
+        }
+
         this.modal = document.createElement('aside');
         this.modal.style.zIndex = this.config.get('modalZIndex');
         this.modal.classList.add(this.config.get('class'));
@@ -86,6 +102,10 @@ export default class Modal extends Snowboard.PluginBase {
         this.snowboard.transition(this.modal, 'open', () => {
             this.focusOnFirstItem();
         });
+
+        if (this.config.get('escClose')) {
+            window.addEventListener('keydown', this.events.keydown);
+        }
     }
 
     close() {
@@ -93,6 +113,14 @@ export default class Modal extends Snowboard.PluginBase {
         this.snowboard.transition(this.modal, 'close', () => {
             document.body.removeChild(this.modal);
         });
+
+        if (this.config.get('allowMultiple') === false) {
+            delete this.element.dataset.modalOpened;
+        }
+
+        if (this.config.get('escClose')) {
+            window.removeEventListener('keydown', this.events.keydown);
+        }
     }
 
     getFocusableElements() {
@@ -124,5 +152,19 @@ export default class Modal extends Snowboard.PluginBase {
         if (this.config.get('overlayClose')) {
             this.close();
         }
+    }
+
+    onKeyDown(event) {
+        console.log(event);
+
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        if (!this.config.get('escClose')) {
+            return;
+        }
+
+        this.close();
     }
 }

@@ -38,6 +38,15 @@ export default class UiHandler extends Snowboard.Singleton {
         document.querySelector('a[data-search]').addEventListener('click', (event) => {
             this.snowboard.modal(document.querySelector('div[data-search]'));
         });
+
+        // Add CTRL+K/CMD+K shortcut to show the search modal
+        window.addEventListener('keydown', (event) => {
+            if (event.key.toLowerCase() === 'k' && (event.ctrlKey || event.metaKey)) {
+                event.preventDefault();
+
+                this.snowboard.modal(document.querySelector('div[data-search]'));
+            }
+        });
     }
 
     ajaxUpdate(updatedElement) {
