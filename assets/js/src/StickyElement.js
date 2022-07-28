@@ -150,7 +150,7 @@ export default class StickyElement extends Snowboard.PluginBase {
             document.removeEventListener('scroll', this.events.scroll);
 
             this.attached = false;
-         } else if (
+        } else if (
             (
                 (
                     this.config.get('minWidth') > 0
@@ -171,6 +171,12 @@ export default class StickyElement extends Snowboard.PluginBase {
             window.requestAnimationFrame(() => {
                 this.onScroll();
             });
+        } else if (
+            this.attached
+            && this.stickied
+        ) {
+            this.clearStick();
+            this.beginStick();
         }
     }
 
