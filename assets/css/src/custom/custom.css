@@ -78,7 +78,7 @@ body.mobile-menu-shown .mobile-logo {
     @apply w-32 scale-100;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     #navigation {
         @apply pt-0 top-[60px];
         height: calc(100% - 60px);
