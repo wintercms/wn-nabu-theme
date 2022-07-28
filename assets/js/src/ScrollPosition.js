@@ -35,7 +35,7 @@ export default class ScrollPosition extends Snowboard.Singleton {
     }
 
     updateScroll() {
-        if (this.smoothTimer) {
+        if (this.smoothTimer && window.scrollY !== 0) {
             return;
         }
 
