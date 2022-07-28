@@ -243,7 +243,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
                 }
             },
             success: (data, request) => {
-                document.querySelector('title').innerText = data.title;
+                document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
                 this.cached[element.dataset.docPage] = data;
                 scrollTo(0, 0);
                 history.pushState({ initial: false, path: element.dataset.docPage }, '', element.getAttribute('href'));
@@ -264,7 +264,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         const contents = document.querySelector('#docs-content');
         const toc = document.querySelector('#docs-toc');
 
-        document.querySelector('title').innerText = data.title;
+        document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
         if (menu) {
             menu.innerHTML = data['#docs-menu'];
             this.snowboard.globalEvent('ajaxUpdate', menu, data['#docs-menu']);
@@ -336,7 +336,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
                     }
                 },
                 success: (data) => {
-                    document.querySelector('title').innerText = data.title;
+                    document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
                     this.cached[state.path] = data;
                     scrollTo(0, 0);
                     this.triggerHashChange();
