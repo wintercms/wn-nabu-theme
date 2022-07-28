@@ -1,0 +1,19 @@
+{
+    "name": "Winter CMS",
+    "short_name": "Winter CMS",
+    "icons": [
+        {
+            "src": "/themes/frost/assets/favicons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/themes/frost/assets/favicons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#103141",
+    "background_color": "#103141",
+    "display": "standalone"
+}
