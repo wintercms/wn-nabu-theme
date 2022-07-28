@@ -7,4 +7,8 @@ is_hidden = 0
 docId = "winter.winterdocs.winterbranch12"
 pageSlug = "{{ :slug }}"
 ==
+{% put page_title %}
+{{ title }} | {{ docTitle }}
+{% endput %}
+
 {% partial 'docsPage::contents' %}
