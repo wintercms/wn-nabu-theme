@@ -6,9 +6,20 @@ is_hidden = 0
 [docsPage]
 docId = "winter.winterdocs.winterbranch12"
 pageSlug = "{{ :slug }}"
+
+[search]
+handler[] = "docs.winter.winterdocs.winterbranch12"
+limit = 100
+perPage = 20
+displayImages = 0
+displayHandlerName = 0
 ==
 {% put page_title %}
 {{ title }} | {{ docName }}
+{% endput %}
+
+{% put search %}
+    {% component search %}
 {% endput %}
 
 {% partial 'docsPage::contents' %}

@@ -169,6 +169,14 @@ description = "Default layout"
 
 <div class="modal-content" data-search>
     <div class="w-[300px] lg:w-[800px] h-[500px] bg-grey-200 dark:bg-navy-light rounded">
+        {% placeholder search %}
+    </div>
+</div>
+
+{% partial "site/footer" %}
+
+{#
+    <div class="w-[300px] lg:w-[800px] h-[500px] bg-grey-200 dark:bg-navy-light rounded">
         <input
             type="text"
             class="
@@ -181,6 +189,4 @@ description = "Default layout"
             placeholder="Enter your search query"
         >
     </div>
-</div>
-
-{% partial "site/footer" %}
+#}
