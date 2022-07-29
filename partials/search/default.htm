@@ -1,0 +1,24 @@
+<div class="flex flex-col h-full">
+    {{ form_ajax(__SELF__ ~ '::onSearch') }}
+        <input
+            type="text"
+            name="query"
+            autocomplete="off"
+            class="
+                block w-full text-h5 text-grey-800 dark:text-white p-4
+                bg-grey-300 dark:bg-navy
+                border-b border-grey-400 dark:border-blue-dark rounded-tl rounded-tr
+                outline-none
+                placeholder:text-grey-500 placeholder:dark:text-blue-dark
+            "
+            placeholder="Enter your search query"
+            data-track-input
+        >
+    {{ form_close() }}
+
+    <div id="{{ __SELF__.getId('results') }}" class="p-4 w-full h-full overflow-y-auto scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500">
+        {% if not query %}
+            {% partial SELF ~ '::no-query' %}
+        {% endif %}
+    </div>
+</div>
