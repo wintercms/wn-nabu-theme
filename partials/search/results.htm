@@ -5,7 +5,7 @@
             class="bg-grey-100 dark:bg-navy hover:bg-white hover:dark:bg-blue-dark p-4 rounded transition-colors group"
         >
             <span class="block text-grey-800 font-semibold dark:text-white">{{ result.title }}</span>
-            <small class="block mt-1 text-grey-500 dark:text-grey-500 dark:group-hover:text-grey-300 leading-snug transition-colors">{{ result.description }}</small>
+            <small class="block mt-1 text-grey-500 dark:text-grey-500 dark:group-hover:text-grey-300 leading-snug transition-colors break-words md:break-normal">{{ result.description }}</small>
         </a>
     {% endfor %}
 </div>
