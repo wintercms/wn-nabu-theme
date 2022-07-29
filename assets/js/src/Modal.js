@@ -101,6 +101,7 @@ export default class Modal extends Snowboard.PluginBase {
 
         this.snowboard.transition(this.modal, 'open', () => {
             this.focusOnFirstItem();
+            this.snowboard.globalEvent('modal.opened', this);
         });
 
         if (this.config.get('escClose')) {
@@ -112,6 +113,7 @@ export default class Modal extends Snowboard.PluginBase {
         this.overlay.hide();
         this.snowboard.transition(this.modal, 'close', () => {
             document.body.removeChild(this.modal);
+            this.snowboard.globalEvent('modal.closed', this);
         });
 
         if (this.config.get('allowMultiple') === false) {
@@ -155,8 +157,6 @@ export default class Modal extends Snowboard.PluginBase {
     }
 
     onKeyDown(event) {
-        console.log(event);
-
         if (event.key !== 'Escape') {
             return;
         }

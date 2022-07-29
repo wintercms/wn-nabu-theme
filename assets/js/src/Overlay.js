@@ -133,6 +133,7 @@
             this.overlay.style.width = '0px';
             this.overlay.style.height = '0px';
             this.snowboard.globalEvent('overlay.hidden', this);
+            this.destruct();
         }, {
             once: true,
         });
