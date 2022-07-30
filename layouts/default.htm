@@ -154,11 +154,15 @@ description = "Default layout"
 
 <section
     id="toc"
-    class="hidden lg:w-1/4 lg:block py-10 pr-8 2xl:pl-12 toc-menu"
+    class="
+        hidden fixed w-full h-screen
+        lg:w-1/4 lg:block lg:relative lg:py-10 lg:pr-8 2xl:pl-12
+        toc-menu
+    "
 >
     <div
         id="docs-toc"
-        class="overflow-y-auto h-full"
+        class="overflow-y-auto h-full p-8 lg:p-0"
         data-sticky
         data-offset-top="40"
         data-no-auto-height
@@ -168,7 +172,7 @@ description = "Default layout"
 </section>
 
 <div class="modal-content" data-search>
-    <div class="w-[300px] lg:w-[800px] h-[500px] bg-grey-200 dark:bg-navy-light rounded">
+    <div class="w-[90vw] sm:w-[75vw] lg:w-[800px] h-[500px] bg-grey-200 dark:bg-navy-light rounded">
         {% placeholder search %}
     </div>
 </div>

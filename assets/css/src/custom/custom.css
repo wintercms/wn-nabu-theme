@@ -83,6 +83,11 @@ body.mobile-menu-shown .mobile-logo {
         @apply pt-0 top-[60px];
         height: calc(100% - 60px);
     }
+
+    #toc {
+        @apply pt-0 top-[60px];
+        height: calc(100% - 60px);
+    }
 }
 
 html[data-scroll]:not([data-scroll="0"], [data-direction="up"]) body:not(.mobile-menu-shown) div.nav-menu {

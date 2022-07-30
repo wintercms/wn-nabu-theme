@@ -4,6 +4,9 @@ export default class UiHandler extends Snowboard.Singleton {
             'stickyElement',
             'codeBlock',
             'codeBlockStyle',
+            'backendPreviewer',
+            'popover',
+            'modal',
         ];
     }
 
