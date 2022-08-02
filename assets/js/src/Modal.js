@@ -17,6 +17,7 @@ export default class Modal extends Snowboard.PluginBase {
         this.modal = null;
         this.events = {
             keydown: (event) => this.onKeyDown(event),
+            dismiss: (event) => this.close(event),
         };
 
         this.createModal();
@@ -25,6 +26,7 @@ export default class Modal extends Snowboard.PluginBase {
     listens() {
         return {
             'overlay.clicked': 'onOverlayClick',
+            'ajaxUpdate': 'onAjaxUpdate',
         };
     }
 
@@ -101,12 +103,14 @@ export default class Modal extends Snowboard.PluginBase {
 
         this.snowboard.transition(this.modal, 'open', () => {
             this.focusOnFirstItem();
-            this.snowboard.globalEvent('modal.opened', this);
+            this.snowboard.globalEvent('modal.opened', this, this.modal);
         });
 
         if (this.config.get('escClose')) {
             window.addEventListener('keydown', this.events.keydown);
         }
+
+        this.attachDisposingElements(this.modal);
     }
 
     close() {
@@ -166,5 +170,19 @@ export default class Modal extends Snowboard.PluginBase {
         }
 
         this.close();
+    }
+
+    attachDisposingElements(parent) {
+        parent.querySelectorAll('[data-dismiss-modal]').forEach((element) => {
+            element.addEventListener('click', this.events.dismiss);
+        });
+    }
+
+    onAjaxUpdate(element) {
+        if (!this.modal.contains(element)) {
+            return;
+        }
+
+        this.attachDisposingElements(element);
     }
 }

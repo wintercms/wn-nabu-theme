@@ -47,6 +47,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         return {
             ready: 'ready',
             ajaxUpdate: 'ajaxUpdate',
+            'modal.opened': 'modalOpened',
         };
     }
 
@@ -91,12 +92,32 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         updatedElement.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-            // Skip pages that are already tracked
-            if (element.dataset.docPage) {
-                return;
-            }
-
             element.dataset.docPage = this.getPagePath(element);
+            element.removeEventListener('click', this.events.click, {
+                capture: true,
+            });
+            element.addEventListener('click', this.events.click, {
+                capture: true,
+            });
+        });
+    }
+
+    /**
+     * Model opened handler
+     *
+     * @param {Modal} instance
+     * @param {HTMLElement} modalElement
+     */
+     modalOpened(instance, modalElement) {
+        if (!this.docsRoot()) {
+            return;
+        }
+
+        modalElement.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
+            element.dataset.docPage = this.getPagePath(element);
+            element.removeEventListener('click', this.events.click, {
+                capture: true,
+            });
             element.addEventListener('click', this.events.click, {
                 capture: true,
             });
