@@ -13,6 +13,7 @@ import CollapsibleMenu from './src/CollapsibleMenu';
 import ScrollPosition from './src/ScrollPosition';
 import BackendPreviewer from './src/BackendPreviewer';
 import Modal from './src/Modal';
+import MobileTocMenu from './src/MobileTocMenu';
 
 // Set up UI scripts
 ((Snowboard) => {
@@ -30,6 +31,7 @@ import Modal from './src/Modal';
     Snowboard.addPlugin('overlay', Overlay);
     Snowboard.addPlugin('collapsibleMenu', CollapsibleMenu);
     Snowboard.addPlugin('mobileMenu', MobileMenu);
+    Snowboard.addPlugin('mobileToc', MobileTocMenu);
     Snowboard.addPlugin('modal', Modal);
 })(window.Snowboard);
 
