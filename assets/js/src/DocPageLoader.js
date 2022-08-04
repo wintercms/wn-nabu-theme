@@ -166,8 +166,20 @@ export default class DocPageLoader extends Snowboard.Singleton {
             return false;
         }
 
-        // Resolve relative pathing
-        let urlParts = document.location.href.replace(`${docRoot}/`, '').replace(/#.*$/, '').split('/');
+        return this.resolvePagePath(path);
+    }
+
+    /**
+     * Determines the document page path from a given hyperlink.
+     *
+     * Returns the page path if it can be calculated, eitherwise `false`.
+     *
+     * @param {String} url
+     */
+    resolvePagePath(url) {
+        const docRoot = this.docsRoot();
+        let path = url.replace(`${docRoot}/`, '').replace(/#.*$/, '');
+        let urlParts = path.split('/');
 
         if (!path.includes('/') || path.startsWith('./')) {
             urlParts.pop();
@@ -225,11 +237,12 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         // Store initial cache
-        this.cached['__initial'] = data;
+        const pagePath = this.resolvePagePath(window.location.href);
         const hash = window.location.hash.replace('#', '');
-        history.replaceState({ initial: true, hash }, '');
+        this.cached[pagePath] = data;
+        history.replaceState({ path: pagePath, hash }, '');
         this.currentState = {
-            initial: true,
+            path: pagePath,
             hash
         };
     }
@@ -254,9 +267,10 @@ export default class DocPageLoader extends Snowboard.Singleton {
         event.preventDefault();
 
         if (this.cached[element.dataset.docPage]) {
+            const hash = window.location.hash.replace('#', '');
             this.loadCached(element.dataset.docPage);
-            history.pushState({ initial: false, path: element.dataset.docPage }, '', element.getAttribute('href'));
-            this.currentState = { initial: false, path: element.dataset.docPage };
+            history.pushState({ path: element.dataset.docPage, hash }, '', element.getAttribute('href'));
+            this.currentState = { path: element.dataset.docPage, hash };
             return;
         }
 
@@ -274,8 +288,9 @@ export default class DocPageLoader extends Snowboard.Singleton {
                 document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
                 this.cached[element.dataset.docPage] = data;
                 scrollTo(0, 0);
-                history.pushState({ initial: false, path: element.dataset.docPage }, '', element.getAttribute('href'));
-                this.currentState = { initial: false, path: element.dataset.docPage };
+                const hash = window.location.hash.replace('#', '');
+                history.pushState({ path: element.dataset.docPage, hash }, '', element.getAttribute('href'));
+                this.currentState = { path: element.dataset.docPage, hash };
                 this.triggerHashChange();
                 this.scrollMenu(element.dataset.docPage);
             },
@@ -333,7 +348,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         // If state is null, we're dealing with a hash change.
-        if (!state || state.initial === undefined) {
+        if (!state) {
             const hash = window.location.hash.replace('#', '');
             state = {
                 ...this.currentState,
@@ -343,9 +358,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
             return;
         }
 
-        if (state.initial) {
-            this.loadCached('__initial');
-        } else if (this.cached[state.path]) {
+        if (this.cached[state.path]) {
             this.loadCached(state.path);
         } else {
             this.snowboard.request(null, 'docsPage::onLoadPage', {
