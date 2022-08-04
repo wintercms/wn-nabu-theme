@@ -82,7 +82,11 @@
         if (scrollTop <= 80) {
             document.querySelector(`#docs-toc ul li a[href="#${this.getFirstAnchor()}"]`).parentElement
                 .classList.add('active');
-            this.updateHash(this.getFirstAnchor());
+            if (scrollTop > 0) {
+                this.updateHash(this.getFirstAnchor());
+            } else {
+                this.updateHash('');
+            }
             return;
         }
 
@@ -135,7 +139,7 @@
     }
 
     /**
-     * Updates the current hashbang and history as the user scrolls through the documentation.
+     * Updates the current hashbang.
      *
      * @param {String} anchor
      */
@@ -146,8 +150,8 @@
         }
 
         // Recreate URL with hash change
-        const newUrl = window.location.pathname + window.location.search + '#' + anchor;
-
-        history.replaceState(history.state, '', newUrl);
+        const newUrl = window.location.pathname
+            + window.location.search
+            + ((anchor === '') ? '' : '#' + anchor);
     }
 }

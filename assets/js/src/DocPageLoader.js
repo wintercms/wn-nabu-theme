@@ -27,6 +27,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         this.cached = {};
         this.docRoot = null;
         this.menu = null;
+        this.currentState = null;
 
         this.events = {
             click: (event) => {
@@ -225,7 +226,12 @@ export default class DocPageLoader extends Snowboard.Singleton {
 
         // Store initial cache
         this.cached['__initial'] = data;
-        history.replaceState({ initial: true }, '');
+        const hash = window.location.hash.replace('#', '');
+        history.replaceState({ initial: true, hash }, '');
+        this.currentState = {
+            initial: true,
+            hash
+        };
     }
 
     /**
@@ -250,6 +256,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         if (this.cached[element.dataset.docPage]) {
             this.loadCached(element.dataset.docPage);
             history.pushState({ initial: false, path: element.dataset.docPage }, '', element.getAttribute('href'));
+            this.currentState = { initial: false, path: element.dataset.docPage };
             return;
         }
 
@@ -268,6 +275,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
                 this.cached[element.dataset.docPage] = data;
                 scrollTo(0, 0);
                 history.pushState({ initial: false, path: element.dataset.docPage }, '', element.getAttribute('href'));
+                this.currentState = { initial: false, path: element.dataset.docPage };
                 this.triggerHashChange();
                 this.scrollMenu(element.dataset.docPage);
             },
@@ -285,7 +293,11 @@ export default class DocPageLoader extends Snowboard.Singleton {
         const contents = document.querySelector('#docs-content');
         const toc = document.querySelector('#docs-toc');
 
-        document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
+        if (data.docName) {
+            document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
+        } else {
+            document.querySelector('title').innerText = data.title;
+        }
         if (menu) {
             menu.innerHTML = data['#docs-menu'];
             this.snowboard.globalEvent('ajaxUpdate', menu, data['#docs-menu']);
@@ -320,25 +332,15 @@ export default class DocPageLoader extends Snowboard.Singleton {
             return;
         }
 
-        // If no initial state is provided, we might be dealing with a hashbang change. Let's try
-        // and see if we can guess the page path
+        // If state is null, we're dealing with a hash change.
         if (!state || state.initial === undefined) {
-            const location = document.location.href;
-
-            // If the location doesn't appear to be within the docs, reload the page
-            if (!location.startsWith(this.docsRoot())) {
-                window.location.reload();
-                return;
-            }
-
-            const docRoot = this.docsRoot();
-            const path = location.replace(`${docRoot}/`, '').replace(/^[\.\/]+/, '').replace(/#.*$/, '');
-
-            // Change the state
+            const hash = window.location.hash.replace('#', '');
             state = {
-                initial: false,
-                path,
+                ...this.currentState,
+                hash,
             };
+            history.replaceState(state, '');
+            return;
         }
 
         if (state.initial) {
