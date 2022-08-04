@@ -61,6 +61,9 @@ export default class MobileTocMenu extends Snowboard.Singleton {
     }
 
     onPageClick() {
+        if (!this.active) {
+            return;
+        }
         this.active = false;
         this.animateBurger();
         document.body.classList.remove('mobile-menu-shown');
