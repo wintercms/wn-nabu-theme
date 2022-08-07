@@ -46,10 +46,8 @@
     }
 }
 
-.toc-menu ul {
+.toc-menu > div > ul {
     li {
-        @apply mt-1;
-
         &.active > a {
             @apply text-blue;
         }
@@ -59,11 +57,15 @@
         }
     }
 
+    & > li {
+        @apply mt-3 leading-[22px];
+    }
+
     & > li > ul {
-        @apply ml-8;
+        @apply ml-6 mt-2;
 
         li {
-            @apply text-caption-mobile lg:text-caption;
+            @apply text-caption-mobile lg:text-caption leading-[18px] mt-[6px];
         }
     }
 }
