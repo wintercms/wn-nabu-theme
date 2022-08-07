@@ -90,7 +90,7 @@
             return;
         }
 
-        if (scrollBottom >= document.body.scrollHeight) {
+        if (scrollBottom >= (document.body.scrollHeight - 80)) {
             document.querySelector(`#docs-toc ul li a[href="#${this.getLastAnchor()}"]`).parentElement
                 .classList.add('active');
                 this.updateHash(this.getLastAnchor());
