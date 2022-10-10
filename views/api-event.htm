@@ -1,0 +1,61 @@
+<ul class="table-of-contents">
+    {% if event.triggers %}
+        <li>
+            <a href="#triggers">
+                Triggers
+            </a>
+        </li>
+    {% endif %}
+</ul>
+
+<h1 class="main-title">
+    {{ event.name }}
+
+    {% if event.docs.summary %}
+    <span class="block heading-5 text-blue">
+        {{ event.docs.summary | raw }}
+    </span>
+    {% endif %}
+</h1>
+
+{% if event.docs.body %}
+<div class="description">
+    {{ event.docs.body | raw }}
+</div>
+{% endif %}
+
+{% if event.triggers %}
+    <h2>
+        <a id="content-triggers" href="#triggers" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Triggers
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Class or file</th>
+                    <th>Line</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trigger in event.triggers %}
+                <tr>
+                    <td>
+                        {% if trigger.reference.definition == 'reference' %}
+                        <a href="path:{{ trigger.reference.type.class|replace({'\\': '/'}) }}" title="{{ trigger.reference.type.class }}" class="code-link">
+                            <code>{{ trigger.reference.type.class }}</code>
+                        </a>
+                        {% else %}
+                            <code>{{ trigger.reference.path }}</code>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ trigger.lines.1 }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
