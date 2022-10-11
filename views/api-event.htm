@@ -1,4 +1,32 @@
 <ul class="table-of-contents">
+    <li>
+        <a href="#usage">
+            Usage
+        </a>
+        <ul>
+            <li>
+                <a href="#usage-global">
+                    Globally
+                </a>
+            </li>
+            {% if event.docs.localEvent %}
+            <li>
+                <a href="#usage-local">
+                    {{ event.docs.localEvent.description }}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+
+    {% if event.params %}
+        <li>
+            <a href="#params">
+                Parameters
+            </a>
+        </li>
+    {% endif %}
+
     {% if event.triggers %}
         <li>
             <a href="#triggers">
@@ -22,6 +50,187 @@
 <div class="description">
     {{ event.docs.body | raw }}
 </div>
+{% endif %}
+
+<h2>
+    <a id="content-usage" href="#usage" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+    Usage
+</h2>
+
+<h3>
+    <a id="content-usage-global" href="#usage-global" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+    Globally
+</h3>
+
+<div class="usage">
+    <pre><code class="language-php">
+        {{- "" -}}
+        use Event;
+        {{- "\n\n" -}}
+        Event::listen('{{ event.name }}', function (
+        {%- for param in event.params -%}
+            {{- "\n    " -}}
+            {%- if param.type.definition == 'union' -%}
+                {%- for type in param.type.types -%}
+                    {%- if not loop.first %} | {% endif -%}
+                    {%- if type.definition == 'reference'-%}
+                        \{{ type.type.name }}
+                    {%- else -%}
+                        {{ type.type }}
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- else -%}
+                {%- if param.type.definition == 'reference' -%}
+                    \{{ param.type.type.name }}
+                {%- elseif param.type.definition == 'scalar' and param.type.type != 'mixed' -%}
+                    {{ param.type.type }}
+                {%- endif -%}
+            {%- endif -%}
+            {%- if param.type.definition != 'scalar' or param.type.type != 'mixed' %} {% endif -%}
+            ${{ param.name }}
+
+            {%- if param.default %} = {{ param.default }}{% endif -%}
+            {%- if not loop.last %},{% endif -%}
+        {%- endfor -%}
+        {%- if event.params -%}{{- "\n" -}}{%- endif -%}
+        ) {
+        {{- "\n    " -}}
+        // Your event listener code goes here...
+        {{- "\n" -}}
+        });
+        {{- "" -}}
+    </code></pre>
+</div>
+
+{% if event.docs.localEvent %}
+<h3>
+    <a id="content-usage-local" href="#usage-local" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+    {{ event.docs.localEvent.description }}
+</h3>
+
+<div class="usage">
+    <pre><code class="language-php">
+        {{- "" -}}
+        {{ event.docs.localEvent.var }}->bindEvent('{{ event.docs.localEvent.event }}', function (
+        {%- for param in event.params -%}
+            {% if not loop.first %}
+                {{- "\n    " -}}
+                {%- if param.type.definition == 'union' -%}
+                    {%- for type in param.type.types -%}
+                        {%- if not loop.first %} | {% endif -%}
+                        {%- if type.definition == 'reference'-%}
+                            \{{ type.type.name }}
+                        {%- else -%}
+                            {{ type.type }}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- else -%}
+                    {%- if param.type.definition == 'reference' -%}
+                        \{{ param.type.type.name }}
+                    {%- elseif param.type.definition == 'scalar' and param.type.type != 'mixed' -%}
+                        {{ param.type.type }}
+                    {%- endif -%}
+                {%- endif -%}
+                {%- if param.type.definition != 'scalar' or param.type.type != 'mixed' %} {% endif -%}
+                ${{ param.name }}
+
+                {%- if param.default %} = {{ param.default }}{% endif -%}
+                {%- if not loop.last %},{% endif -%}
+            {% endif %}
+        {%- endfor -%}
+        {%- if event.params -%}{{- "\n" -}}{%- endif -%}
+        ) {
+        {{- "\n    " -}}
+        // Your event listener code goes here...
+        {{- "\n" -}}
+        });
+        {{- "" -}}
+    </code></pre>
+</div>
+{% endif %}
+
+{% if event.params %}
+    <h2>
+        <a id="content-params" href="#params" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Parameters
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th class="hidden md:table-cell">Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for param in event.params %}
+                <tr>
+                    <td>
+                        ${{ param.name }}
+                    </td>
+                    <td class="hidden md:table-cell">
+                        {%- if param.type.definition == 'union' -%}
+                            {%- for type in param.type.types -%}
+                                {%- if not loop.first %} | {% endif -%}
+                                {%- if type.definition == 'reference' and type.type.linked -%}
+                                    <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                        {{- type.type.name -}}
+                                    </a>
+                                {%- elseif type.definition == 'reference'-%}
+                                    <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                                {%- else -%}
+                                    <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {%- else -%}
+                            {%- if param.type.definition == 'reference' and param.type.type.linked -%}
+                                <a href="path:{{ param.type.type.class|replace({'\\': '/'}) }}" title="{{ param.type.type.class }}">
+                                    {{- param.type.type.name -}}
+                                </a>
+                            {%- elseif param.type.definition == 'reference' -%}
+                                <span class="text-blue-dark dark:text-blue">{{ param.type.type.name }}</span>
+                            {%- elseif param.type.definition == 'scalar' -%}
+                                <span class="text-blue-dark dark:text-blue">{{ param.type.type }}</span>
+                            {%- endif -%}
+                        {%- endif -%}
+                    </td>
+                    <td>
+                        <div class="block md:hidden">
+                            {%- if param.type.definition == 'union' -%}
+                                {%- for type in param.type.types -%}
+                                    {%- if not loop.first %} | {% endif -%}
+                                    {%- if type.definition == 'reference' and type.type.linked -%}
+                                        <a href="path:{{ type.type.class|replace({'\\': '/'}) }}" title="{{ type.type.class }}">
+                                            {{- type.type.name -}}
+                                        </a>
+                                    {%- elseif type.definition == 'reference'-%}
+                                        <span class="text-blue-dark dark:text-blue">{{ type.type.name }}</span>
+                                    {%- else -%}
+                                        <span class="text-blue-dark dark:text-blue">{{ type.type }}</span>
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            {%- else -%}
+                                {%- if param.type.definition == 'reference' and param.type.type.linked -%}
+                                    <a href="path:{{ param.type.type.class|replace({'\\': '/'}) }}" title="{{ param.type.type.class }}">
+                                        {{- param.type.type.name -}}
+                                    </a>
+                                {%- elseif param.type.definition == 'reference' -%}
+                                    <span class="text-blue-dark dark:text-blue">{{ param.type.type.name }}</span>
+                                {%- elseif param.type.definition == 'scalar' -%}
+                                    <span class="text-blue-dark dark:text-blue">{{ param.type.type }}</span>
+                                {%- endif -%}
+                            {%- endif -%}
+                        </div>
+
+                        {{ param.summary | raw }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endif %}
 
 {% if event.triggers %}
