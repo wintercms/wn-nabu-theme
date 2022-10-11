@@ -177,37 +177,42 @@ export default class DocPageLoader extends Snowboard.Singleton {
      * @param {String} url
      */
     resolvePagePath(url) {
+        // If this path looks external, don't handle the path
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url;
+        }
+
         const docRoot = this.docsRoot();
-        let path = url.replace(`${docRoot}/`, '').replace(/#.*$/, '');
-        let urlParts = path.split('/');
+        let currentUrl = window.document.location.href.replace(`${docRoot}/`, '').replace(/#.*$/, '');
+        let currentParts = currentUrl.split('/');
+        let path = url;
 
         if (!path.includes('/') || path.startsWith('./')) {
-            urlParts.pop();
-            urlParts.push(path);
-            path = urlParts.join('/');
-        }
-        if (path.startsWith('../../../')) {
-            urlParts.pop();
-            urlParts.pop();
-            urlParts.pop();
-            urlParts.pop();
+            currentParts.pop();
+            path = path.replace('./', '');
+            currentParts.push(path);
+            path = currentParts.join('/');
+        } else if (path.startsWith('../../../')) {
+            currentParts.pop();
+            currentParts.pop();
+            currentParts.pop();
+            currentParts.pop();
             path = path.replace('../../../', '');
-            urlParts.push(path);
-            path = urlParts.join('/');
+            currentParts.push(path);
+            path = currentParts.join('/');
         } else if (path.startsWith('../../')) {
-            urlParts.pop();
-            urlParts.pop();
-            urlParts.pop();
+            currentParts.pop();
+            currentParts.pop();
+            currentParts.pop();
             path = path.replace('../../', '');
-            urlParts.push(path);
-            path = urlParts.join('/');
-        }
-        if (path.startsWith('../')) {
-            urlParts.pop();
-            urlParts.pop();
+            currentParts.push(path);
+            path = currentParts.join('/');
+        } else if (path.startsWith('../')) {
+            currentParts.pop();
+            currentParts.pop();
             path = path.replace('../', '');
-            urlParts.push(path);
-            path = urlParts.join('/');
+            currentParts.push(path);
+            path = currentParts.join('/');
         }
 
         return path;
