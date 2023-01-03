@@ -31,7 +31,7 @@
      * Ready handler.
      */
     ready() {
-        document.addEventListener('scroll', () => this.checkPosition(), {
+        document.querySelector('#content').addEventListener('scroll', () => this.checkPosition(), {
             passive: true
         });
         this.checkPosition();
@@ -63,6 +63,8 @@
 
             this.anchorPositions[anchorName] = this.documentOffsetTop(anchor) + (window.innerHeight) - 80;
         });
+
+        console.log(this.anchorPositions);
     }
 
     /**
@@ -72,8 +74,8 @@
     checkPosition() {
         this.getAnchorPositions();
 
-        const scrollTop = window.scrollY;
-        const scrollBottom = window.scrollY + window.innerHeight;
+        const scrollTop = document.querySelector('#content').scrollTop;
+        const scrollBottom = document.querySelector('#content').scrollTop + window.innerHeight;
 
         document.querySelectorAll('#docs-toc ul li a').forEach((element) => {
             element.parentElement.classList.remove('active')
@@ -90,7 +92,7 @@
             return;
         }
 
-        if (scrollBottom >= (document.body.scrollHeight - 80)) {
+        if (scrollBottom >= (document.querySelector('#content').scrollHeight - 80)) {
             document.querySelector(`#docs-toc ul li a[href="#${this.getLastAnchor()}"]`).parentElement
                 .classList.add('active');
                 this.updateHash(this.getLastAnchor());
@@ -153,5 +155,7 @@
         const newUrl = window.location.pathname
             + window.location.search
             + ((anchor === '') ? '' : '#' + anchor);
+
+        history.replaceState(history.state, '', newUrl);
     }
 }

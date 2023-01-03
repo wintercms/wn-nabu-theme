@@ -304,12 +304,15 @@ export default class DocPageLoader extends Snowboard.Singleton {
             success: (data, request) => {
                 document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
                 this.cached[element.dataset.docPage] = data;
-                scrollTo(0, 0);
                 const hash = window.location.hash.replace('#', '');
                 history.pushState({ path: element.dataset.docPage, hash }, '', element.getAttribute('href'));
                 this.currentState = { path: element.dataset.docPage, hash };
-                this.triggerHashChange();
-                this.scrollMenu(element.dataset.docPage);
+
+                requestAnimationFrame(() => {
+                    document.querySelector('#content').scrollTo(0, 0);
+                    this.triggerHashChange();
+                    this.scrollMenu(element.dataset.docPage);
+                });
             },
         });
     }
@@ -333,19 +336,52 @@ export default class DocPageLoader extends Snowboard.Singleton {
         if (menu) {
             menu.innerHTML = data['#docs-menu'];
             this.snowboard.globalEvent('ajaxUpdate', menu, data['#docs-menu']);
+
+            menu.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
+                element.dataset.docPage = this.getPagePath(element);
+                element.removeEventListener('click', this.events.click, {
+                    capture: true,
+                });
+                element.addEventListener('click', this.events.click, {
+                    capture: true,
+                });
+            });
         }
         if (contents) {
             contents.innerHTML = data['#docs-content'];
             this.snowboard.globalEvent('ajaxUpdate', contents, data['#docs-content']);
+
+            contents.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
+                element.dataset.docPage = this.getPagePath(element);
+                element.removeEventListener('click', this.events.click, {
+                    capture: true,
+                });
+                element.addEventListener('click', this.events.click, {
+                    capture: true,
+                });
+            });
         }
         if (toc) {
             toc.innerHTML = data['#docs-toc'];
             this.snowboard.globalEvent('ajaxUpdate', toc, data['#docs-toc']);
+
+            toc.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
+                element.dataset.docPage = this.getPagePath(element);
+                element.removeEventListener('click', this.events.click, {
+                    capture: true,
+                });
+                element.addEventListener('click', this.events.click, {
+                    capture: true,
+                });
+            });
         }
         this.snowboard.globalEvent('ajaxUpdateComplete');
-        scrollTo(0, 0);
-        this.triggerHashChange();
-        this.scrollMenu(path);
+
+        requestAnimationFrame(() => {
+            document.querySelector('#content').scrollTo(0, 0);
+            this.triggerHashChange();
+            this.scrollMenu(path);
+        });
         return;
     }
 
@@ -391,9 +427,12 @@ export default class DocPageLoader extends Snowboard.Singleton {
                 success: (data) => {
                     document.querySelector('title').innerText = `${data.title} | ${data.docName}`;
                     this.cached[state.path] = data;
-                    scrollTo(0, 0);
-                    this.triggerHashChange();
-                    this.scrollMenu(state.path);
+
+                    requestAnimationFrame(() => {
+                        document.querySelector('#content').scrollTo(0, 0);
+                        this.triggerHashChange();
+                        this.scrollMenu(state.path);
+                    });
                 },
             });
         }
