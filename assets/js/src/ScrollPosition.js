@@ -11,7 +11,7 @@
  */
 export default class ScrollPosition extends Snowboard.Singleton {
     construct() {
-        this.lastPos = window.scrollY;
+        this.lastPos = document.getElementById('content').scrollTop;
         this.smoothTimer = null;
     }
 
@@ -22,30 +22,34 @@ export default class ScrollPosition extends Snowboard.Singleton {
     }
 
     ready() {
-        document.documentElement.dataset.scroll = Math.round(window.scrollY);
-        document.documentElement.dataset.direction = (window.scrollY > 0) ? 'down' : 'up';
+        const scrollY = document.getElementById('content').scrollTop;
 
-        document.addEventListener('scroll', () => this.updateScroll(), { passive: true });
+        document.documentElement.dataset.scroll = Math.round(scrollY);
+        document.documentElement.dataset.direction = (scrollY > 0) ? 'down' : 'up';
+
+        document.getElementById('content').addEventListener('scroll', () => this.updateScroll(), { passive: true });
     }
 
     destruct() {
-        document.removeEventListener('scroll', () => this.updateScroll(), { passive: true });
+        document.getElementById('content').removeEventListener('scroll', () => this.updateScroll(), { passive: true });
 
         super.destruct();
     }
 
     updateScroll() {
-        if (this.smoothTimer && window.scrollY !== 0) {
+        const scrollY = document.getElementById('content').scrollTop;
+
+        if (this.smoothTimer && scrollY !== 0) {
             return;
         }
 
-        document.documentElement.dataset.scroll = Math.round(window.scrollY);
-        if (this.lastPos === 0 || window.scrollY > (this.lastPos + 40)) {
+        document.documentElement.dataset.scroll = Math.round(scrollY);
+        if (this.lastPos === 0 || scrollY > (this.lastPos + 40)) {
             document.documentElement.dataset.direction = 'down';
-        } else if (window.scrollY < (this.lastPos - 40)) {
+        } else if (scrollY < (this.lastPos - 40)) {
             document.documentElement.dataset.direction = 'up';
         }
-        this.lastPos = window.scrollY;
+        this.lastPos = scrollY;
 
         this.smoothTimer = setTimeout(() => {
             this.smoothTimer = null;

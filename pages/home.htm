@@ -16,7 +16,7 @@ is_hidden = 0
         <div class="border-t border-grey-300 dark:border-navy-light"></div>
 
         {% for doc in docsList.docs %}
-            <div class="p-2 flex flex-row gap-4 items-center">
+            <div class="p-2 w-2/3 mx-auto flex flex-row gap-4 items-center">
                 <div class="heading-5 flex-grow">
                     {{ doc.name }}
                 </div>
@@ -25,11 +25,13 @@ is_hidden = 0
                         View docs
                     </a>
                 </div>
+                {% if doc.sourceUrl %}
                 <div class="flex-shrink text-right">
                     <a href="{{ doc.sourceUrl }}" class="button button-outlined">
                         Source
                     </a>
                 </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

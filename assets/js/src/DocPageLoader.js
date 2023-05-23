@@ -285,9 +285,9 @@ export default class DocPageLoader extends Snowboard.Singleton {
 
         if (this.cached[element.dataset.docPage]) {
             const hash = window.location.hash.replace('#', '');
-            this.loadCached(element.dataset.docPage);
             history.pushState({ path: element.dataset.docPage, hash }, '', element.getAttribute('href'));
             this.currentState = { path: element.dataset.docPage, hash };
+            this.loadCached(element.dataset.docPage);
             return;
         }
 
