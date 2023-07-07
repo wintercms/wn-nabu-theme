@@ -2,8 +2,10 @@
     {{ title }}
 </div>
 
+<span class="text-navy dark:text-white font-semibold mb-4 hidden lg:block">
+    On this page
+</span>
+
 <div class="my-4 border-t border-grey-300 lg:border-grey-100 dark:border-navy block lg:hidden"></div>
 
 {% partial 'docsPage::toc-items' items=pageNav %}
-
-{% partial 'docs/github-edit' docId=docId pagePath=pagePath %}
