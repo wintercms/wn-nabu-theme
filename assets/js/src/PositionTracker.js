@@ -7,7 +7,7 @@
  * @author Ben Thomson <git@alfreido.com>
  * @copyright Winter CMS
  */
- export default class PositionTracker extends Snowboard.Singleton {
+export default class PositionTracker extends Snowboard.Singleton {
     /**
      * Constructor.
      */
@@ -63,8 +63,6 @@
 
             this.anchorPositions[anchorName] = this.documentOffsetTop(anchor) + (window.innerHeight) - 80;
         });
-
-        console.log(this.anchorPositions);
     }
 
     /**

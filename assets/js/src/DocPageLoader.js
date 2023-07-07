@@ -121,7 +121,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
      * @param {Modal} instance
      * @param {HTMLElement} modalElement
      */
-     modalOpened(instance, modalElement) {
+    modalOpened(instance, modalElement) {
         if (!this.docsRoot()) {
             return;
         }

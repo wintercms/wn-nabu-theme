@@ -10,3 +10,18 @@
 {% endput %}
 
 {{ content | raw }}
+
+<div class="my-10 font-semibold flex items-center">
+    {% if previousPage %}
+        <a class="mr-auto" href="{{ this.page.fileName | page({ slug: previousPage.getPath() }) }}">
+            &larr;
+            {{ previousPage.getTitle() }}
+        </a>
+    {% endif %}
+    {% if nextPage %}
+        <a class="ml-auto" href="{{ this.page.fileName | page({ slug: nextPage.getPath() }) }}">
+            {{ nextPage.getTitle() }}
+            &rarr;
+        </a>
+    {% endif %}
+</div>

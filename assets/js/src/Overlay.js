@@ -6,7 +6,7 @@
  * @copyright 2021 Winter.
  * @author Ben Thomson <git@alfreido.com>
  */
- export default class Overlay extends Snowboard.PluginBase {
+export default class Overlay extends Snowboard.PluginBase {
     /**
      * Constructor.
      */
