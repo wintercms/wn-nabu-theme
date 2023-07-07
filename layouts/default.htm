@@ -251,13 +251,8 @@ description = "Default layout"
     id="content"
     class="w-full lg:ml-[280px] xl:ml-[350px] lg:w-1/2 xl:w-7/12 2xl:w-3/5 py-6 lg:py-10 px-6 lg:px-8 2xl:px-16 overflow-x-hidden scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500"
 >
-    <div id="docs-content" class="rich-content pt-16 lg:pt-0 break-words md:break-normal">
+    <div id="docs-content" class="pt-16 lg:pt-0 break-words md:break-normal">
         {% page %}
-    </div>
-    <div class="my-8 border-t border-grey-300 lg:border-grey-100 dark:border-navy"></div>
-    <div class="flex justify-between">
-        <span>Copyright &copy; {{ 'now' | date('Y') }} <a href="https://wintercms.com/">Winter CMS</a></span>
-        {% partial 'docs/github-edit' docId=docId pagePath=pagePath %}
     </div>
 </section>
 
@@ -278,6 +273,7 @@ description = "Default layout"
     >
         {% partial docsPage ~ "::toc" docId=docId pagePath=pagePath %}
     </div>
+
 </section>
 
 <div class="modal-content" data-search>

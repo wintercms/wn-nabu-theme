@@ -9,7 +9,9 @@
 <meta name="og:description" content="{{ frontMatter.og.description|default(frontMatter.description) }}">
 {% endput %}
 
+<div class="rich-content">
 {{ content | raw }}
+</div>
 
 <div class="my-10 font-semibold flex items-center">
     {% if previousPage %}
@@ -24,4 +26,10 @@
             &rarr;
         </a>
     {% endif %}
+</div>
+
+<div class="my-8 border-t border-grey-300 lg:border-grey-100 dark:border-navy"></div>
+<div class="flex justify-between">
+    <span>Copyright &copy; {{ 'now' | date('Y') }} <a href="https://wintercms.com/">Winter CMS</a></span>
+    {% partial 'docs/github-edit' docId=docId pagePath=pagePath %}
 </div>
