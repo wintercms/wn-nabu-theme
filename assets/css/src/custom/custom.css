@@ -44,10 +44,10 @@ a[data-theme="system"] {
 a[data-search] {
     @apply relative;
 
-    &::after {
+    &::before {
         content: '\e900';
         font-family: 'Icon Font';
-        @apply absolute top-1/2 right-2 -translate-y-1/2 text-[22px] opacity-30;
+        @apply absolute top-1/2 left-2 -translate-y-1/2 text-[22px] opacity-30;
     }
 }
 

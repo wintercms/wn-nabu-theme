@@ -9,7 +9,7 @@ description = "Default layout"
 <section id="navigation" class="
     bg-grey-100 dark:bg-navy-darker fixed hidden lg:flex flex-col items-start
     w-full opacity-0 lg:opacity-100 lg:mt-0 lg:w-[280px] xl:w-[350px] h-screen
-    gap-6 lg:gap-8 py-6 lg:py-10 px-6 z-50
+    gap-6 lg:gap-8 pt-6 lg:pt-10 px-6 z-50
 ">
     <div class="w-full mt-4 lg:mt-0 flex flex-row-reverse gap-6 lg:flex-col items-center lg:items-start">
         <div class="w-auto lg:w-full h-10 flex flex-row justify-end lg:gap-2 xl:gap-8">
@@ -123,14 +123,15 @@ description = "Default layout"
             <a
                 data-search
                 class="
-                    block cursor-pointer
+                    flex cursor-pointer
                     bg-grey-200 focus:bg-grey-300 hover:bg-grey-300
                     dark:bg-navy dark:focus:bg-navy-light dark:hover:bg-navy-light
-                    transition-colors outline-none rounded-md py-2 pl-4 px-8 w-full
+                    transition-colors outline-none rounded-md py-2 pr-4 px-8 w-full
                     text-grey-500 dark:text-blue-dark
                 "
             >
                 Search docs
+                <span class="ml-auto pl-3 flex-none text-xs font-semibold">⌘K</span>
             </a>
         </div>
     </div>
@@ -138,6 +139,7 @@ description = "Default layout"
     <div id="docs-menu" class="
         flex-grow w-full overflow-y-auto sidebar-menu
         scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500
+        pb-6 lg:pb-10
     ">
         {% partial docsPage ~ "::menu" %}
     </div>
@@ -247,7 +249,7 @@ description = "Default layout"
 
 <section
     id="content"
-    class="w-full lg:ml-[280px] xl:ml-[350px] lg:w-1/2 xl:w-7/12 2xl:w-3/5 py-6 lg:py-10 px-6 lg:px-8 2xl:px-16 rich-content overflow-x-hidden scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500"
+    class="w-full lg:ml-[280px] xl:ml-[350px] lg:w-1/2 xl:w-7/12 2xl:w-3/5 py-6 lg:py-10 px-6 lg:px-8 2xl:px-16 overflow-x-hidden scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500"
 >
     <div id="docs-content" class="pb-10 pt-16 lg:pt-0 lg:pb-20 break-words md:break-normal">
         {% page %}
@@ -258,13 +260,13 @@ description = "Default layout"
     id="toc"
     class="
         hidden fixed w-full h-screen z-50
-        lg:w-1/4 lg:block lg:relative lg:py-10 lg:pr-8 2xl:pl-12
+        lg:w-1/4 lg:block lg:relative lg:py-10 lg:px-8 2xl:pl-12
         toc-menu
     "
 >
     <div
         id="docs-toc"
-        class="w-full overflow-y-auto h-full p-8 lg:p-0 scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500"
+        class="w-full h-full overflow-y-auto p-8 lg:p-0 scrollbar scrollbar-track-transparent scrollbar-thumb-grey-300 dark:scrollbar-thumb-grey-500"
         data-sticky
         data-offset-top="40"
         data-no-auto-height
