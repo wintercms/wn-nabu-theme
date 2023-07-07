@@ -1,14 +1,25 @@
 title = "Winter CMS 1.2 User Interface Documentation"
-url = "/docs/v1.2/ui/:slug?*"
+url = "/v1.2/ui/:slug?*"
 layout = "default"
 is_hidden = 0
 
 [docsPage]
 docId = "winter.winterdocs.winterbranch12ui"
 pageSlug = "{{ :slug }}"
+
+[search]
+handler[] = "docs.winter.winterdocs.winterbranch12ui"
+limit = 100
+perPage = 20
+displayImages = 0
+displayHandlerName = 0
 ==
 {% put page_title %}
 {{ title }} | {{ docName }}
+{% endput %}
+
+{% put search %}
+    {% component search %}
 {% endput %}
 
 {% partial 'docsPage::contents' %}
