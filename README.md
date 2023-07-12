@@ -37,7 +37,7 @@ php artisan mix:compile --production -p theme-nabu
 You can also set up the theme to watch for changes, recompiling the theme each time a change is made to the stylesheets or templates:
 
 ```bash
-php artisan mix:watch --production -p theme-nabu
+php artisan mix:watch --production theme-nabu
 ```
 
 By default, this theme is setup to not include the compiled assets in source control, as it is recommended that you include the compilation process above in a build or deployment script. However, if you wish to include the compiled assets in your source control, you may remove the following section from the `.gitignore` definition:
