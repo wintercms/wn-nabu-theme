@@ -14,9 +14,8 @@ description = "Global header"
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% placeholder page_title default %}{{ pageTitle }}{% endplaceholder %}</title>
         {% partial "meta/styles" %}
-        <meta name="generator" content="Winter CMS">
+        {% partial "meta/seo" %}
     </head>
     {% set pageId = this.page.id %}
     {% if pageId is empty %}

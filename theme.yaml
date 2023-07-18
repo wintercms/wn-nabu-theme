@@ -7,3 +7,4 @@ code: "nabu"
 require:
     - Winter.Docs
     - Winter.Search
+    - Winter.SEO

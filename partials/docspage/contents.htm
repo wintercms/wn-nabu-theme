@@ -1,16 +1,19 @@
-{% if frontMatter.description %}
-    {% put head %}
-        <meta name="description" content="{{ frontMatter.description }}">
-    {% endput %}
-{% endif %}
+==
+<?php
+use Winter\SEO\Classes\Meta;
 
-{% put head %}
-<meta name="og:title" content="{{ frontMatter.og.title|default(title) }}">
-<meta name="og:description" content="{{ frontMatter.og.description|default(frontMatter.description) }}">
-{% endput %}
-
+function onStart()
+{
+    if (!empty($this['frontMatter']['description'])) {
+        Meta::set('description', $this['frontMatter']['description']);
+    }
+    if (!empty($this['frontMatter']['og']['title'])) {
+        Meta::set('og:title', $this['frontMatter']['og']['title']);
+    }
+}
+==
 <div class="rich-content">
-{{ content | raw }}
+    {{ content | raw }}
 </div>
 
 <div class="my-10 font-semibold flex items-center">

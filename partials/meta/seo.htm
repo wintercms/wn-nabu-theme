@@ -1,0 +1,53 @@
+[seoTags]
+==
+<?php
+use Backend\Models\BrandSetting;
+use System\Classes\MediaLibrary;
+use Winter\SEO\Classes\Link;
+use Winter\SEO\Classes\Meta;
+function onStart()
+{
+    $this['page_title'] = $this->page->title ?? Meta::get('og:title') ?? '';
+    $this['app_name'] = BrandSetting::get('app_name');
+
+    // Set the cannonical URL
+    Link::set('canonical', \URL::current());
+
+    // Parse the meta_image as a media library image
+    if (!empty($this->page->meta_image)) {
+        $this->page->meta_image = MediaLibrary::url($this->page->meta_image);
+    }
+
+    // Handle the nofollow meta property being set
+    if (!empty($this->page->meta_nofollow)) {
+        Link::set('robots', 'nofollow');
+    }
+
+    // Set the meta tags based on the current page if not set
+    $metaMap = [
+        Meta::class => [
+            'og:title' => 'meta_title',
+            'og:description' => 'meta_description',
+            'og:image' => 'meta_image',
+        ],
+        Link::class => [
+            'prev' => 'paginatePrev',
+            'next' => 'paginateNext',
+        ],
+    ];
+    foreach ($metaMap as $class => $map) {
+        foreach ($map as $name => $pageProp) {
+            if (!empty($this->page->{$pageProp}) && empty($class::get($name))) {
+                $class::set($name, $this->page->{$pageProp});
+            }
+        }
+    }
+}
+?>
+==
+<title>
+    {%- placeholder page_title default %}
+        {%- if page_title %}{{ page_title | striptags }} | {{ app_name }}{% else %}{{ app_name }}{% endif -%}
+    {% endplaceholder -%}
+</title>
+{% component seoTags %}
