@@ -58,8 +58,8 @@ export default class CodeBlockStyle extends Snowboard.Singleton
         const assets = {
             css: [
                 (this.snowboard.darkMode().isDark())
-                    ? this.snowboard.url().to('themes/nabu/assets/css/vendor/prism.css')
-                    : this.snowboard.url().to('themes/nabu/assets/css/vendor/prism-light.css')
+                    ? 'themes/nabu/assets/css/vendor/prism.css'
+                    : 'themes/nabu/assets/css/vendor/prism-light.css'
             ]
         };
 
