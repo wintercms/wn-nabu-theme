@@ -140,3 +140,15 @@ pre {
 iframe.backend-preview {
     @apply w-full my-6;
 }
+
+.columned-list {
+    @apply border border-sky dark:border-navy-light rounded-md p-4 my-8;
+
+    & > ul {
+        @apply p-0 m-0 columns-2 md:columns-3 lg:columns-2 2xl:columns-3;
+
+        & > li {
+            @apply list-none m-0 py-1;
+        }
+    }
+}
