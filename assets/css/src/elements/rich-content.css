@@ -128,6 +128,27 @@
         @apply bg-grey-100 dark:bg-navy-darker p-1 mx-px rounded-md text-orange dark:text-orange-light text-code-mobile lg:text-code font-code;
     }
 
+    .code-toolbar > .toolbar {
+        @apply top-1 right-1 flex flex-row gap-2;
+        @apply touch:!opacity-100 touch:relative touch:-mt-8 touch:mb-8 touch:bg-grey-400 touch:dark:bg-navy-light touch:top-0 touch:left-0 touch:px-4 touch:py-1 touch:bg-opacity-20 touch:dark:bg-opacity-20 touch:justify-end;
+
+        & > .toolbar-item > a,
+        & > .toolbar-item > span,
+        & > .toolbar-item > button {
+            @apply inline-block cursor-pointer text-disclaimer-mobile lg:text-disclaimer text-grey-600 dark:text-grey-400 py-px px-2 rounded-lg bg-white dark:bg-navy;
+            box-shadow: none;
+        }
+
+        & > .toolbar-item > span {
+            @apply cursor-default opacity-60;
+        }
+
+        & > .toolbar-item > a,
+        & > .toolbar-item > button {
+            @apply transition-colors hover:bg-grey-200 dark:hover:bg-navy-light;
+        }
+    }
+
     blockquote {
         @apply bg-sky-light text-grey-800 dark:bg-navy-light dark:text-grey-300 py-4 px-6 my-8 rounded-md;
 

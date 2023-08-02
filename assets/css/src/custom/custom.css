@@ -137,6 +137,10 @@ pre {
     }
 }
 
+.code-toolbar > .toolbar {
+    @apply touch:-mx-6 md:mx-0;
+}
+
 iframe.backend-preview {
     @apply w-full my-6;
 }

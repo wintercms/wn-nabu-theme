@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
     content: [
@@ -84,5 +85,8 @@ module.exports = {
     },
     plugins: [
         require('tailwind-scrollbar'),
+        plugin(function ({ addVariant }) {
+            addVariant('touch', '@media (hover: none)');
+        }),
     ],
 }
