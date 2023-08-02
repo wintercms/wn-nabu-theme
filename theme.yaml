@@ -1,7 +1,7 @@
 name: "Nabu"
 description: "An elegant theme designed for documentation sites."
 author: "Winter CMS Maintainers"
-homepage: "https://docs.wintercms.com"
+homepage: "https://wintercms.com/docs"
 code: "nabu"
 
 require:
