@@ -25,7 +25,13 @@
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    .heading-1,
+    .heading-2,
+    .heading-3,
+    .heading-4,
+    .heading-5,
+    .heading-6 {
         @apply mt-8 relative;
 
         &:first-child {
@@ -42,19 +48,19 @@
         }
     }
 
-    h1 {
+    h1, .heading-1 {
         @apply mb-8;
     }
 
-    h2 {
+    h2, .heading-2 {
         @apply pt-5 lg:pt-10 mb-8 pb-4 border-b border-sky dark:border-navy-light;
     }
 
-    h3 {
+    h3, .heading-3 {
         @apply pt-3 lg:pt-4 mb-8;
     }
 
-    h4 {
+    h4, .heading-4 {
         @apply pt-2 mb-8;
     }
 
@@ -86,27 +92,27 @@
         @apply my-0;
     }
 
-    h1, h1 > a {
+    h1, h1 > a, .heading-1 {
         @apply font-heading font-light text-h2 tracking-normal lg:text-h1 lg:tracking-tight text-navy-dark dark:text-white no-underline;
     }
 
-    h2, h2 > a {
+    h2, h2 > a, .heading-2 {
         @apply font-heading font-light text-h3 lg:text-h2 text-navy-dark dark:text-white no-underline;
     }
 
-    h3, h3 > a {
+    h3, h3 > a, .heading-3 {
         @apply font-heading font-light text-h4 lg:text-h3 text-navy-dark dark:text-white no-underline;
     }
 
-    h4, h4 > a {
+    h4, h4 > a, .heading-4 {
         @apply font-bold text-h5 lg:text-h4 text-navy-dark dark:text-white no-underline;
     }
 
-    h5, h5 > a {
+    h5, h5 > a, .heading-5 {
         @apply font-bold text-h6 lg:text-h5 text-navy-dark dark:text-white no-underline;
     }
 
-    h6, h6 > a {
+    h6, h6 > a, .heading-6 {
         @apply font-bold text-h6 text-navy-dark dark:text-white no-underline;
     }
 
