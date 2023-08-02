@@ -73,10 +73,17 @@ export default class DocPageLoader extends Snowboard.Singleton {
 
             const pagePath = this.getPagePath(element);
             if (pagePath !== false) {
-                element.dataset.docPage = this.getPagePath(element);
-                element.addEventListener('click', this.events.click);
+                element.dataset.docPage = pagePath;
+                element.removeEventListener('click', this.events.click, {
+                    capture: true,
+                });
+                element.addEventListener('click', this.events.click, {
+                    capture: true,
+                });
             }
         });
+
+        this.doPreload(this.toPreload(document.querySelector('#docs-content')));
 
         // Create listener for history change (navigation)
         window.addEventListener('popstate', this.events.popstate);
@@ -87,7 +94,11 @@ export default class DocPageLoader extends Snowboard.Singleton {
      *
      * @param {HTMLElement} updatedElement
      */
-    ajaxDone(data) {
+    ajaxDone(data, request) {
+        if (request.options.data.preload) {
+            return;
+        }
+
         if (!this.docsRoot()) {
             return;
         }
@@ -104,15 +115,20 @@ export default class DocPageLoader extends Snowboard.Singleton {
             }
 
             updatedElement.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-                element.dataset.docPage = this.getPagePath(element);
-                element.removeEventListener('click', this.events.click, {
-                    capture: true,
-                });
-                element.addEventListener('click', this.events.click, {
-                    capture: true,
-                });
+                const pagePath = this.getPagePath(element);
+                if (pagePath !== false) {
+                    element.dataset.docPage = pagePath;
+                    element.removeEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                    element.addEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                }
             });
         });
+
+        this.doPreload(this.toPreload(document.querySelector('#docs-content')));
     }
 
     /**
@@ -127,13 +143,16 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         modalElement.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-            element.dataset.docPage = this.getPagePath(element);
-            element.removeEventListener('click', this.events.click, {
-                capture: true,
-            });
-            element.addEventListener('click', this.events.click, {
-                capture: true,
-            });
+            const pagePath = this.getPagePath(element);
+            if (pagePath !== false) {
+                element.dataset.docPage = pagePath;
+                element.removeEventListener('click', this.events.click, {
+                    capture: true,
+                });
+                element.addEventListener('click', this.events.click, {
+                    capture: true,
+                });
+            }
         });
     }
 
@@ -173,8 +192,8 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
         let path = link.replace(`${docRoot}/`, '').replace(/#.*$/, '');
 
-        // If this path looks external, don't handle the path
-        if (path.startsWith('http://') || path.startsWith('https://')) {
+        // If this path looks external (or absolute), don't handle the path
+        if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
             return false;
         }
 
@@ -254,7 +273,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         // Store initial cache
-        const pagePath = this.resolvePagePath(window.location.href);
+        const pagePath = this.resolvePagePath(window.location.href.replace(`${this.docsRoot()}/`, ''));
         const hash = window.location.hash.replace('#', '');
         this.cached[pagePath] = data;
         history.replaceState({ path: pagePath, hash }, '');
@@ -338,13 +357,16 @@ export default class DocPageLoader extends Snowboard.Singleton {
             this.snowboard.globalEvent('ajaxUpdate', menu, data['#docs-menu']);
 
             menu.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-                element.dataset.docPage = this.getPagePath(element);
-                element.removeEventListener('click', this.events.click, {
-                    capture: true,
-                });
-                element.addEventListener('click', this.events.click, {
-                    capture: true,
-                });
+                const pagePath = this.getPagePath(element);
+                if (pagePath !== false) {
+                    element.dataset.docPage = pagePath;
+                    element.removeEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                    element.addEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                }
             });
         }
         if (contents) {
@@ -352,13 +374,16 @@ export default class DocPageLoader extends Snowboard.Singleton {
             this.snowboard.globalEvent('ajaxUpdate', contents, data['#docs-content']);
 
             contents.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-                element.dataset.docPage = this.getPagePath(element);
-                element.removeEventListener('click', this.events.click, {
-                    capture: true,
-                });
-                element.addEventListener('click', this.events.click, {
-                    capture: true,
-                });
+                const pagePath = this.getPagePath(element);
+                if (pagePath !== false) {
+                    element.dataset.docPage = pagePath;
+                    element.removeEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                    element.addEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                }
             });
         }
         if (toc) {
@@ -366,13 +391,16 @@ export default class DocPageLoader extends Snowboard.Singleton {
             this.snowboard.globalEvent('ajaxUpdate', toc, data['#docs-toc']);
 
             toc.querySelectorAll('a:not([href^="#"],.external-link)').forEach((element) => {
-                element.dataset.docPage = this.getPagePath(element);
-                element.removeEventListener('click', this.events.click, {
-                    capture: true,
-                });
-                element.addEventListener('click', this.events.click, {
-                    capture: true,
-                });
+                const pagePath = this.getPagePath(element);
+                if (pagePath !== false) {
+                    element.dataset.docPage = pagePath;
+                    element.removeEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                    element.addEventListener('click', this.events.click, {
+                        capture: true,
+                    });
+                }
             });
         }
         this.snowboard.globalEvent('ajaxUpdateComplete');
@@ -461,5 +489,49 @@ export default class DocPageLoader extends Snowboard.Singleton {
         if (link) {
             link.scrollIntoView({ behavior: 'auto', block: 'center' });
         }
+    }
+
+    /**
+     * Determines if we can pre-load documentation pages within a given document.
+     *
+     * To prevent a docs system from being hit too hard, we will limit pre-loading to 8 pages at
+     * a time.
+     *
+     * @param {HTMLElement} document
+     */
+    toPreload(document) {
+        const docPages = [];
+
+        document.querySelectorAll('a:not([href^="#"],.external-link)[data-doc-page]').forEach((element) => {
+            if (
+                element.dataset.docPage
+                && !this.cached[element.dataset.docPage]
+                && !docPages.includes(element.dataset.docPage)) {
+                docPages.push(element.dataset.docPage);
+            }
+        });
+
+        return (docPages.length > 8) ? docPages.slice(0, 7) : docPages;
+    }
+
+    /**
+     * Pre-loads a list of pages into the cache.
+     *
+     * @param {string[]} pagePaths
+     */
+    doPreload(pagePaths) {
+        pagePaths.forEach((pagePath) => {
+            this.snowboard.request(null, 'docsPage::onLoadPage', {
+                data: {
+                    page: pagePath,
+                    preload: true,
+                },
+                stripe: false,
+                beforeUpdate: (data) => {
+                    this.cached[pagePath] = data;
+                    return false;
+                },
+            });
+        });
     }
 }
