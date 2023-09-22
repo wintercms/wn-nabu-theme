@@ -57,6 +57,7 @@
     Usage
 </h2>
 
+{% if not (event.name starts with "model." %} 
 <h3>
     <a id="content-usage-global" href="#usage-global" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
     Globally
@@ -101,6 +102,7 @@
         {{- "" -}}
     </code></pre>
 </div>
+{% endif %}
 
 {% if event.docs.localEvent %}
 <h3>
