@@ -34,7 +34,8 @@ export default class PositionTracker extends Snowboard.Singleton {
         document.querySelector('#content').addEventListener('scroll', () => this.checkPosition(), {
             passive: true
         });
-        this.checkPosition();
+        // disable this on document ready to prevent anchor in URL to be lost
+        //this.checkPosition();
     }
 
     /**
