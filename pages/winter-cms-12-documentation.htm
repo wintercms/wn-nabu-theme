@@ -2,6 +2,7 @@ title = "Winter CMS 1.2 Documentation"
 url = "/v1.2/docs/:slug?*"
 layout = "default"
 is_hidden = 0
+meta_nofollow = 0
 
 [docsPage]
 docId = "winter.winterdocs.winterbranch12"
@@ -9,10 +10,11 @@ pageSlug = "{{ :slug }}"
 
 [search]
 handler[] = "docs.winter.winterdocs.winterbranch12"
+showExcerpts = 1
 limit = 100
 perPage = 20
-displayImages = 0
-displayHandlerName = 0
+grouping = 1
+perGroup = 5
 ==
 {% put page_title %}
 {{ title }} | {{ docName }}
