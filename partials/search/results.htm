@@ -1,12 +1,49 @@
 <div class="flex flex-col gap-2">
-    {% for result in results[selectedHandler].results %}
-        <a
-            href="{{ result.url }}"
-            class="bg-grey-100 dark:bg-navy hover:bg-white hover:dark:bg-blue-dark p-4 rounded transition-colors group"
-            data-dismiss-modal
-        >
-            <span class="block text-grey-800 font-semibold dark:text-white">{{ result.title }}</span>
-            <small class="hidden sm:block mt-1 text-grey-500 dark:text-grey-500 dark:group-hover:text-grey-300 leading-snug transition-colors break-words md:break-normal">{{ result.description }}</small>
-        </a>
-    {% endfor %}
+    {% if __SELF__.isGrouped %}
+        {% for group, results in results[selectedHandler].results %}
+            <div class="font-semibold">{{ group }}</div>
+
+            <div class="flex flex-col gap-2 my-2 pl-4 border-l border-blue">
+                {% for result in results %}
+                    <a
+                        href="{{ result.url }}"
+                        class="bg-grey-100 dark:bg-navy hover:bg-white hover:dark:bg-blue-dark py-2 px-4 rounded transition-colors group"
+                        data-dismiss-modal
+                    >
+                        {% if result.label %}
+                            <span class="inline-block px-1 py-px text-disclaimer-mobile lg:text-disclaimer bg-grey-300 dark:bg-navy-light rounded">
+                                {{ result.label }}
+                            </span>
+                        {% endif %}
+
+                        <span class="block text-grey-800 font-semibold dark:text-white">{{ result.title }}</span>
+
+                        {% if __SELF__.showExcerpts %}
+                            <small class="hidden sm:block mt-1 text-grey-500 dark:text-grey-500 dark:group-hover:text-grey-300 leading-snug transition-colors break-words md:break-normal">{{ result.description }}</small>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        {% for result in results[selectedHandler].results %}
+            <a
+                href="{{ result.url }}"
+                class="bg-grey-100 dark:bg-navy hover:bg-white hover:dark:bg-blue-dark py-2 px-4 rounded transition-colors group"
+                data-dismiss-modal
+            >
+                {% if result.label %}
+                    <span class="inline-block p-1 text-disclaimer-mobile lg:text-disclaimer bg-grey-300 dark:bg-navy-light rounded">
+                        {{ result.label }}
+                    </span>
+                {% endif %}
+
+                <span class="block text-grey-800 font-semibold dark:text-white">{{ result.title }}</span>
+
+                {% if __SELF__.showExcerpts %}
+                    <small class="hidden sm:block mt-1 text-grey-500 dark:text-grey-500 dark:group-hover:text-grey-300 leading-snug transition-colors break-words md:break-normal">{{ result.description }}</small>
+                {% endif %}
+            </a>
+        {% endfor %}
+    {% endif %}
 </div>
