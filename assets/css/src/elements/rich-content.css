@@ -39,7 +39,7 @@
         }
 
         .heading-permalink {
-            @apply absolute -left-6 text-blue-dark dark:text-blue hover:text-green-dark dark:hover:text-green opacity-100 text-right lg:-left-6 lg:text-center lg:opacity-0 transition-all w-5 lg:w-6;
+            @apply absolute -left-6 text-blue-dark dark:text-blue hover:text-green-dark dark:hover:text-green opacity-100 text-right lg:-left-6 lg:text-center lg:opacity-0 transition-all w-5 lg:w-6 -mt-6 pt-6;
         }
 
         &:hover .heading-permalink,
