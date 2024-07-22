@@ -49,7 +49,10 @@ export default class BackendPreviewer extends Snowboard.PluginBase
         // Resize to the size of the content
         setTimeout(() => {
             this.iframe.style.height = `${this.iframe.contentWindow.document.body.offsetHeight}px`;
-        }, 10);
+        }, 50);
+        setTimeout(() => {
+            this.iframe.style.height = `${this.iframe.contentWindow.document.body.offsetHeight}px`;
+        }, 250);
     }
 
     /**
@@ -65,6 +68,7 @@ export default class BackendPreviewer extends Snowboard.PluginBase
                 <title>Backend Preview</title>
 
                 <link rel="stylesheet" href="${this.snowboard.url().to('modules/system/assets/ui/storm.css')}">
+                <link rel="stylesheet" href="${this.snowboard.url().to('modules/system/assets/ui/icons.css')}">
             </head>
             <body>
             </body>
