@@ -1,4 +1,11 @@
 <ul class="table-of-contents">
+    {% if class.extends %}
+        <li>
+            <a href="#extends">
+                Extends
+            </a>
+        </li>
+    {% endif %}
     {% if class.traits %}
         <li>
             <a href="#traits">
@@ -83,6 +90,27 @@
             </ul>
         </li>
     {% endif %}
+    {% if class.extendedBy %}
+        <li>
+            <a href="#extended-by">
+                Extended by
+            </a>
+        </li>
+    {% endif %}
+    {% if class.implementedBy %}
+        <li>
+            <a href="#implemented-by">
+                Implemented by
+            </a>
+        </li>
+    {% endif %}
+    {% if class.usedBy %}
+        <li>
+            <a href="#used-by">
+                Used by
+            </a>
+        </li>
+    {% endif %}
 </ul>
 
 <h1 class="main-title">
@@ -102,16 +130,44 @@
         abstract
     {%- endif %} {{ class.type }} {{ class.namespace }}\{{ class.name -}}
 
-    {%- if class.extends %}{{ "\n" }}extends {{class.extends }}{% endif -%}
+    {%- if class.extends.class %}{{ "\n" }}extends {{class.extends.class }}{% endif -%}
 
     {%- if class.implements %}{{ "\n" }}implements {% endif -%}
-    {%- for interface in class.implements %}{{ "\n" }}    {{ interface }}{% if not loop.last %},{% endif%}{% endfor -%}
+    {%- for interface in class.implements %}{{ "\n" }}    {{ interface.class }}{% if not loop.last %},{% endif%}{% endfor -%}
 </code></pre>
 
 {% if class.docs.body %}
 <div class="description">
     {{ class.docs.body | raw }}
 </div>
+{% endif %}
+
+{% if class.extends %}
+    <h2>
+        <a id="content-extends" href="#extends" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Extends
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="path:{{ class.extends.class|replace({'\\': '/'}) }}" title="{{ class.extends.class}}" class="code-link">
+                            <code>{{ class.extends.name }}</code>
+                        </a>
+                    </td>
+                    <td>{{ class.extends.summary | raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endif %}
 
 {% if class.traits %}
@@ -501,4 +557,94 @@
             </div>
         </div>
     {% endfor %}
+{% endif %}
+
+{% if class.extendedBy %}
+    <h2>
+        <a id="content-extended-by" href="#extended-by" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Extended by
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for extendedBy in class.extendedBy %}
+                <tr>
+                    <td>
+                        <a href="path:{{ extendedBy.class|replace({'\\': '/'}) }}" title="{{ extendedBy.class}}" class="code-link">
+                            <code>{{ extendedBy.name }}</code>
+                        </a>
+                    </td>
+                    <td>{{ extendedBy.summary | raw }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if class.implementedBy %}
+    <h2>
+        <a id="content-implemented-by" href="#implemented-by" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Implemented by
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for implementedBy in class.implementedBy %}
+                <tr>
+                    <td>
+                        <a href="path:{{ implementedBy.class|replace({'\\': '/'}) }}" title="{{ implementedBy.class}}" class="code-link">
+                            <code>{{ implementedBy.name }}</code>
+                        </a>
+                    </td>
+                    <td>{{ implementedBy.summary | raw }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if class.usedBy %}
+    <h2>
+        <a id="content-used-by" href="#used-by" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+        Used by
+    </h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usedBy in class.usedBy %}
+                <tr>
+                    <td>
+                        <a href="path:{{ usedBy.class|replace({'\\': '/'}) }}" title="{{ usedBy.class}}" class="code-link">
+                            <code>{{ usedBy.name }}</code>
+                        </a>
+                    </td>
+                    <td>{{ usedBy.summary | raw }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endif %}
