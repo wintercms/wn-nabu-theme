@@ -34,8 +34,7 @@ export default class PositionTracker extends Snowboard.Singleton {
         document.querySelector('#content').addEventListener('scroll', () => this.checkPosition(), {
             passive: true
         });
-        // disable this on document ready to prevent anchor in URL to be lost
-        //this.checkPosition();
+        this.checkPosition();
     }
 
     /**
@@ -111,7 +110,6 @@ export default class PositionTracker extends Snowboard.Singleton {
         if (currentAnchor) {
             document.querySelector(`#docs-toc ul li a[href="#${currentAnchor}"]`).parentElement
                 .classList.add('active');
-            this.updateHash(currentAnchor);
         }
     }
 
@@ -137,24 +135,5 @@ export default class PositionTracker extends Snowboard.Singleton {
         }
 
         return top;
-    }
-
-    /**
-     * Updates the current hashbang.
-     *
-     * @param {String} anchor
-     */
-    updateHash(anchor) {
-        const currentHash = window.location.hash.replace('#', '');
-        if (currentHash === anchor) {
-            return;
-        }
-
-        // Recreate URL with hash change
-        const newUrl = window.location.pathname
-            + window.location.search
-            + ((anchor === '') ? '' : '#' + anchor);
-
-        history.replaceState(history.state, '', newUrl);
     }
 }

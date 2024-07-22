@@ -26,7 +26,9 @@ export default class Hashbangs extends Snowboard.Singleton {
     ready() {
         this.addListener();
         if (window.location.hash) {
-            this.scrollToLink();
+            setTimeout(() => {
+                this.scrollToLink();
+            }, 15);
         }
     }
 
@@ -39,6 +41,7 @@ export default class Hashbangs extends Snowboard.Singleton {
      */
     scrollToLink() {
         let hash = window.location.hash;
+
         if (!hash) {
             return;
         }
