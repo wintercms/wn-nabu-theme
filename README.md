@@ -7,8 +7,9 @@ An elegant theme designed for documentation sites, using the powerful features o
 ## Requirements
 
 - Winter CMS v1.2 or above, with the following plugins installed:
-    - Winter.Docs
-    - Winter.Search
+    - [Winter.Docs](https://github.com/wintercms/wn-docs-plugin)
+    - [Winter.Search](https://github.com/wintercms/wn-search-plugin)
+    - [Winter.SEO](https://github.com/wintercms/wn-seo-plugin)
 - NodeJS v14.0 or above
 - NPM v6.0 or above
 
