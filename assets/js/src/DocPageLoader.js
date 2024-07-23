@@ -531,6 +531,7 @@ export default class DocPageLoader extends Snowboard.Singleton {
                     this.cached[pagePath] = data;
                     return false;
                 },
+                error: () => false,
             });
         });
     }
