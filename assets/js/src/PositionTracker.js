@@ -80,20 +80,25 @@ export default class PositionTracker extends Snowboard.Singleton {
         });
 
         if (scrollTop <= 80) {
-            document.querySelector(`#docs-toc ul li a[href="#${this.getFirstAnchor()}"]`).parentElement
-                .classList.add('active');
-            if (scrollTop > 0) {
-                this.updateHash(this.getFirstAnchor());
-            } else {
-                this.updateHash('');
-            }
+            const firstAnchor = document.querySelector(`#docs-toc ul li a[href="#${this.getFirstAnchor()}"]`);
+            firstAnchor.parentElement.classList.add('active');
+
+            firstAnchor.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+            });
+
             return;
         }
 
         if (scrollBottom >= (document.querySelector('#content').scrollHeight - 80)) {
-            document.querySelector(`#docs-toc ul li a[href="#${this.getLastAnchor()}"]`).parentElement
-                .classList.add('active');
-                this.updateHash(this.getLastAnchor());
+            const lastAnchor = document.querySelector(`#docs-toc ul li a[href="#${this.getLastAnchor()}"]`)
+            lastAnchor.parentElement.classList.add('active');
+
+            lastAnchor.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+            });
             return;
         }
 
@@ -108,8 +113,13 @@ export default class PositionTracker extends Snowboard.Singleton {
         });
 
         if (currentAnchor) {
-            document.querySelector(`#docs-toc ul li a[href="#${currentAnchor}"]`).parentElement
-                .classList.add('active');
+            const thisAnchor = document.querySelector(`#docs-toc ul li a[href="#${currentAnchor}"]`)
+            thisAnchor.parentElement.classList.add('active');
+
+            thisAnchor.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+            });
         }
     }
 
