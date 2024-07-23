@@ -29,26 +29,16 @@
                 {% for property in class.properties %}
                     <li>
                         <a href="#prop-{{ property.name | slug }}">
-                            <span class="type">
-                                {% if property.type.definition == 'union' %}
-                                    {% for type in property.type.types %}
-                                        {% if not loop.first %}
-                                            |
-                                        {% endif %}
-                                        {% if type.definition == 'reference' %}
-                                            {{ type.type.name }}
-                                        {% else %}
-                                            {{ type.type }}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    {% if property.type.definition == 'reference' %}
-                                        {{ property.type.type.name }}
-                                    {% else %}
-                                        {{ property.type.type }}
-                                    {% endif %}
-                                {% endif %}
-                            </span>
+                            {% if property.inherited %}
+                                <span data-type="1" class="visibility-inherited">
+                                    inherited
+                                </span>
+                            {% else %}
+                                <span data-type="1" class="visibility-{{ property.visibility }}">
+                                    {{ property.visibility }}
+                                </span>
+                            {% endif %}
+
                             <span class="name">
                                 ${{ property.name }}
                             </span>
@@ -67,17 +57,13 @@
                 {% for method in class.methods %}
                     <li>
                         <a href="#method-{{ method.name | slug }}">
-                            {% if method.visibility == 'public' %}
-                                <span class="public">
-                                    public
-                                </span>
-                            {% elseif method.visibility == 'protected' %}
-                                <span class="protected">
-                                    protected
+                            {% if method.inherited %}
+                                <span data-type="1" class="visibility-inherited">
+                                    inherited
                                 </span>
                             {% else %}
-                                <span class="private">
-                                    private
+                                <span data-type="1" class="visibility-{{ method.visibility }}">
+                                    {{ method.visibility }}
                                 </span>
                             {% endif %}
 
@@ -269,6 +255,12 @@
         <h3 class="!text-base !font-standard !mb-2 !mt-3">
             <a id="content-prop-{{ property.name | slug }}" href="#prop-{{ property.name | slug }}" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
 
+            {% if property.inherited %}
+                <span class="visibility-inherited">
+                    inherited
+                </span>
+            {% endif %}
+
             <span class="visibility-{{ property.visibility }}">
                 {{ property.visibility }}
             </span>
@@ -347,6 +339,12 @@
 
         <h3 class="!text-base !font-standard !mb-2 !mt-0{% if not loop.first %} !pt-0{% endif %}">
             <a id="content-method-{{ method.name | slug }}" href="#method-{{ method.name | slug }}" class="heading-permalink" aria-hidden="true" title="Permalink">#</a>
+
+            {% if method.inherited %}
+                <span class="visibility-inherited">
+                    inherited
+                </span>
+            {% endif %}
 
             <span class="visibility-{{ method.visibility }}">
                 {{ method.visibility }}

@@ -1,5 +1,15 @@
 span[class^="visibility"] {
-    @apply inline-block px-2 py-px rounded-md mr-1 bg-grey-200 dark:bg-navy;
+    @apply inline-block px-2 py-px rounded-md mr-1 bg-grey-200 dark:bg-navy text-grey-900 dark:text-white;
+}
+span[class^="type visibility"] {
+    @apply inline-block px-1 py-px rounded-md mr-1 bg-grey-200 dark:bg-navy text-grey-900 dark:text-white;
+}
+
+span[class^="visibility"],
+span[class^="type visibility"] {
+    &.visibility-inherited {
+        background-color: #e0e0e0;
+    }
 
     &.visibility-public {
         background-color: #d0e5cc;
@@ -15,7 +25,12 @@ span[class^="visibility"] {
 }
 
 html.dark {
-    span[class^="visibility"] {
+    span[class^="visibility"],
+    span[class^="type visibility"] {
+        &.visibility-inherited {
+            background-color: #4a5961;
+        }
+
         &.visibility-public {
             background-color: #2c4f25;
         }

@@ -54,6 +54,10 @@
             @apply text-blue;
         }
 
+        &.active > a > span.type {
+            @apply bg-blue text-white;
+        }
+
         a {
             @apply hover:text-green dark:hover:text-green-dark;
         }
