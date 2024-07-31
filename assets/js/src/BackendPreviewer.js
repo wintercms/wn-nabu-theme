@@ -67,8 +67,8 @@ export default class BackendPreviewer extends Snowboard.PluginBase
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Backend Preview</title>
 
-                <link rel="stylesheet" href="${this.snowboard.url().to('modules/system/assets/ui/storm.css')}">
-                <link rel="stylesheet" href="${this.snowboard.url().to('modules/system/assets/ui/icons.css')}">
+                <link rel="stylesheet" href="${this.snowboard.url().asset('modules/system/assets/ui/storm.css')}">
+                <link rel="stylesheet" href="${this.snowboard.url().asset('modules/system/assets/ui/icons.css')}">
             </head>
             <body>
             </body>
