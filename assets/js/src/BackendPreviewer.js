@@ -26,39 +26,29 @@ export default class BackendPreviewer extends Snowboard.PluginBase
      * Render backend preview
      */
     renderBlock() {
-        const parser = new DOMParser();
-        const tempDoc = parser.parseFromString(
-            this.snowboard.sanitizer().sanitize(this.getHtmlFromElement()),
-            'text/html'
-        );
-
         this.iframe = document.createElement('iframe');
         this.iframe.classList.add('backend-preview');
         this.container.parentElement.replaceChild(this.iframe, this.container);
         this.iframe.contentWindow.document.open();
-        this.iframe.contentWindow.document.write(this.htmlTemplate());
+        this.iframe.contentWindow.document.write(this.htmlTemplate(
+            this.snowboard.sanitizer().sanitize(this.getHtmlFromElement())
+        ));
         this.iframe.contentWindow.document.close();
 
-        tempDoc.body.childNodes.forEach((node) => {
-            this.iframe.contentWindow.document.body.appendChild(node.cloneNode(true));
+        // Listen for the load event to ensure the content is fully loaded
+        this.iframe.addEventListener('load', () => {
+            // Apply styling
+            this.iframe.contentWindow.document.body.style.padding = '20px';
+
+            // Resize to the size of the content
+            this.iframe.style.height = `${this.iframe.contentWindow.document.body.scrollHeight}px`;
         });
-
-        // Apply styling
-        this.iframe.contentWindow.document.body.style.padding = '20px';
-
-        // Resize to the size of the content
-        setTimeout(() => {
-            this.iframe.style.height = `${this.iframe.contentWindow.document.body.offsetHeight}px`;
-        }, 50);
-        setTimeout(() => {
-            this.iframe.style.height = `${this.iframe.contentWindow.document.body.offsetHeight}px`;
-        }, 250);
     }
 
     /**
      * Renders the HTML template for the backend preview
      */
-    htmlTemplate() {
+    htmlTemplate(content) {
         return `
             <!DOCTYPE html>
             <html lang="en">
@@ -69,8 +59,15 @@ export default class BackendPreviewer extends Snowboard.PluginBase
 
                 <link rel="stylesheet" href="${this.snowboard.url().asset('modules/system/assets/ui/storm.css')}">
                 <link rel="stylesheet" href="${this.snowboard.url().asset('modules/system/assets/ui/icons.css')}">
+                <link rel="stylesheet" href="${this.snowboard.url().asset('modules/backend/assets/css/winter.css')}">
             </head>
             <body>
+                ${content}
+
+                <script src="${this.snowboard.url().asset('modules/backend/assets/js/vendor/jquery.min.js')}"></script>
+                <script src="${this.snowboard.url().asset('modules/system/assets/js/framework.js')}"></script>
+                <script src="${this.snowboard.url().asset('modules/system/assets/ui/storm-min.js')}"></script>
+                <script src="${this.snowboard.url().asset('modules/backend/assets/js/winter-min.js')}"></script>
             </body>
             </html>
         `;
