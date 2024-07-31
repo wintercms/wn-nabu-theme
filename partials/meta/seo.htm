@@ -18,6 +18,11 @@ function onStart()
         $this->page->meta_image = MediaLibrary::url($this->page->meta_image);
     }
 
+    // Populate the page's meta title if one isn't set
+    if (empty($this->page->meta_title)) {
+        $this->page->meta_title = $this->page->title;
+    }
+
     // Handle the nofollow meta property being set
     if (!empty($this->page->meta_nofollow)) {
         Link::set('robots', 'nofollow');
