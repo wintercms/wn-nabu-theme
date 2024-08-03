@@ -16,22 +16,23 @@ function onStart()
     {{ content | raw }}
 </div>
 
-<div class="my-10 font-semibold flex items-center">
+<div class="my-8 border-t border-grey-300 lg:border-grey-100 dark:border-navy"></div>
+
+<div class="font-semibold grid grid-cols-2 gap-x-4 items-center my-8">
     {% if previousPage %}
-        <a class="mr-auto" href="{{ this.page.fileName | page({ slug: previousPage.getPath() }) }}">
-            &larr;
-            {{ previousPage.getTitle() }}
+        <a class="py-[11px] px-[16px] border rounded-md transition-color duration-300 ease-out hover:border-blue" href="{{ this.page.fileName | page({ slug: previousPage.getPath() }) }}">
+            <span class="block text-[12px]">&larr; Previous page</span>
+            <span class="block text-[14px] text-blue">{{ previousPage.getTitle() }}</span>
         </a>
     {% endif %}
     {% if nextPage %}
-        <a class="ml-auto" href="{{ this.page.fileName | page({ slug: nextPage.getPath() }) }}">
-            {{ nextPage.getTitle() }}
-            &rarr;
+        <a class="py-[11px] px-[16px] border rounded-md text-right transition-color duration-300 ease-out hover:border-blue" href="{{ this.page.fileName | page({ slug: nextPage.getPath() }) }}">
+            <span class="block text-[12px]">Next page &rarr;</span>
+            <span class="block text-[14px] text-blue">{{ nextPage.getTitle() }}</span>
         </a>
     {% endif %}
 </div>
 
-<div class="my-8 border-t border-grey-300 lg:border-grey-100 dark:border-navy"></div>
 <div class="flex justify-between">
     <span>Copyright &copy; {{ 'now' | date('Y') }} <a href="https://wintercms.com/">Winter CMS</a></span>
     {% partial 'docs/github-edit' docId=docId pagePath=pagePath %}
