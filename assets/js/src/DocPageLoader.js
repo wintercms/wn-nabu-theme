@@ -301,8 +301,14 @@ export default class DocPageLoader extends Snowboard.Singleton {
         }
 
         event.preventDefault();
+        const cached = this.cached[element.dataset.docPage];
 
-        if (this.cached[element.dataset.docPage]) {
+        if (cached) {
+            if (cached.hasOwnProperty('error')){
+                const newUrl = element.getAttribute('href');
+                window.location.href = newUrl;
+                return;
+            }
             const hash = window.location.hash.replace('#', '');
             history.pushState({ path: element.dataset.docPage, hash }, '', element.getAttribute('href'));
             this.currentState = { path: element.dataset.docPage, hash };
